@@ -1,10 +1,14 @@
 # 🌐 Md Imam Hosen | Full Stack Developer 🚀
 
-Hello! I'm **Md Imam Hosen**, a passionate and driven Full Stack Developer dedicated to creating seamless and efficient digital experiences. My journey in software engineering is motivated by a desire to craft user-focused applications and solve complex problems through innovative solutions.
+> ![Intro Animation](https://media.giphy.com/media/xUOxeW0o2JFV4sUipc/giphy.gif)
+
+Hello! I'm **Md Imam Hosen**, a passionate Full Stack Developer dedicated to creating seamless and efficient digital experiences. My journey in software engineering is motivated by a desire to craft user-focused applications and solve complex problems through innovative solutions.
 
 ---
 
 ## 🎓 **About Me**
+
+> ![About Animation](https://media.giphy.com/media/2Ygy0khwewleIYt0mr/giphy.gif)
 
 - **Education**: Pursuing a B.Sc. in Computer Science & Engineering
   **Institution**: University of Barisal
@@ -16,21 +20,23 @@ Hello! I'm **Md Imam Hosen**, a passionate and driven Full Stack Developer dedic
 
 ## 🛠️ **Technical Skills**
 
+> ![Technical Skills Animation](https://media.giphy.com/media/3o6fJ9Rdt1Fgq04hXq/giphy.gif)
+
 ### 💻 **Programming Languages**
 
-> **C**, **C++**, **JavaScript**, **Java**, **TypeScript**
+> ![Languages Animation](https://media.giphy.com/media/3otPoeNcxixtYPnEDK/giphy.gif) > **C**, **C++**, **JavaScript**, **Java**, **TypeScript**
 
 ### 🌐 **Frontend Development**
 
-> **HTML**, **CSS**, **JavaScript**, **ReactJS**, **Next.js**, **Tailwind CSS**
+> ![Frontend Animation](https://media.giphy.com/media/l3vR85PnGsBwu1PFK/giphy.gif) > **HTML**, **CSS**, **JavaScript**, **ReactJS**, **Next.js**, **Tailwind CSS**
 
 ### ⚙️ **Backend Development**
 
-> **Node.js**, **ExpressJS**, **MongoDB**, **Mongoose**
+> ![Backend Animation](https://media.giphy.com/media/xT9IgG50Fb7Mi0prBC/giphy.gif) > **Node.js**, **ExpressJS**, **MongoDB**, **Mongoose**
 
 ### 🛠️ **Tools & Technologies**
 
-> **VS Code**, **Git & GitHub**, **Postman**
+> ![Tools Animation](https://media.giphy.com/media/1zszCnwrxghnG/giphy.gif) > **VS Code**, **Git & GitHub**, **Postman**
 
 ### 🧩 **Libraries & Frameworks**
 
@@ -44,6 +50,8 @@ Hello! I'm **Md Imam Hosen**, a passionate and driven Full Stack Developer dedic
 
 ## 🌱 **Currently Learning**
 
+> ![Learning Animation](https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif)
+
 - **TypeScript**: Embracing type safety for reliable, maintainable code
 - **Next.js**: Mastering server-rendered and static web apps
 - **Advanced State Management**: Redux Toolkit and Context API for scalable applications
@@ -51,6 +59,8 @@ Hello! I'm **Md Imam Hosen**, a passionate and driven Full Stack Developer dedic
 ---
 
 ## 🛠️ **Let's Connect!**
+
+> ![Contact Animation](https://media.giphy.com/media/l3vR9pa5su8hhu8zm/giphy.gif)
 
 - **Email**: [mdimam.cse9.bu@gmail.com](mailto:mdimam.cse9.bu@gmail.com)
 - **WhatsApp**: [+8801733570761](https://wa.me/+8801733570761)
@@ -67,4 +77,4 @@ Hello! I'm **Md Imam Hosen**, a passionate and driven Full Stack Developer dedic
 
 ---
 
-> If you're ready to work together or just want to chat about technology, drop me a message! 🌟
+> Ready to work together? Let’s connect and create something amazing! 🌟
