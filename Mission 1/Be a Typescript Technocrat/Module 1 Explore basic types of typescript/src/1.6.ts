@@ -2,7 +2,7 @@ const user: {
   name: string;
   age: number;
   password: string;
-  readonly company: string;
+  readonly company: string; // This property is read-only and cannot be changed. it is called literal type
   contactEmail?: string;
 } = {
   name: "John Doe",
