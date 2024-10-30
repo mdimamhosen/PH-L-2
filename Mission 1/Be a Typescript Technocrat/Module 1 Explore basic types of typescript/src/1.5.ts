@@ -1,4 +1,4 @@
-const user: {
+const user1: {
   name: string;
   age: number;
   password: string;
@@ -10,4 +10,4 @@ const user: {
   password: "password123",
   company: "Google",
 };
-user.company = "Microsoft"; // Error: Cannot assign to 'company' because it is a read-only property.
+// user.company = "Microsoft"; // Error: Cannot assign to 'company' because it is a read-only property.
