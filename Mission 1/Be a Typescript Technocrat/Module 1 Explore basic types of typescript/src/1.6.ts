@@ -17,3 +17,7 @@ const user2 = {
     return `${this.name} has a balance of $${this.balance + balance}`;
   },
 };
+
+const arr: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const newArray: number[] = arr.map((num: number): number => num * 2);
+console.log(newArray);
