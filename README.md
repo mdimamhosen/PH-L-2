@@ -58,7 +58,3 @@ Hello! I'm **Md Imam Hosen**, a passionate and driven Full Stack Developer dedic
 ---
 
 > “The best way to predict the future is to invent it.” – Alan Kay
-
----
-
-> If you're ready to work together or just want to chat about technology, drop me a message! 🌟
