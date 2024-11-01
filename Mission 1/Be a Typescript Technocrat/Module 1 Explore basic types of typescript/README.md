@@ -26,8 +26,6 @@ let isActive: boolean = true;
 console.log(username, age, isActive);
 ```
 
-````
-
 ## 2. Interfaces
 
 Interfaces are used to define the shape of an object, allowing you to define properties and their types.
@@ -128,6 +126,7 @@ enum Direction {
 
 console.log(Direction.Up); // Output: 0
 ```
+
 ## 8. Interview Questions
 
 <details>
@@ -155,4 +154,6 @@ console.log(Direction.Up); // Output: 0
 <p>A tuple in TypeScript is defined using square brackets with specified types for each element. For example: <code>type UserTuple = [string, number];</code></p>
 </details>
 
-````
+```
+
+```
