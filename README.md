@@ -5,21 +5,6 @@ Barisal, Bangladesh
 📞 +8801733570761
 ✉️ [mdimam.cse9.bu@gmail.com](mailto:mdimam.cse9.bu@gmail.com)
 
-<div align="center">
-  <a href="https://github.com/mdimamhosen">
-    <img src="https://img.icons8.com/ios-filled/50/000000/github.png" alt="GitHub" />
-  </a>
-  <a href="https://www.linkedin.com/in/mdimam02/">
-    <img src="https://img.icons8.com/ios-filled/50/000000/linkedin.png" alt="LinkedIn" />
-  </a>
-  <a href="https://codeforces.com/profile/Imam02">
-    <img src="https://img.icons8.com/ios-filled/50/000000/codeforces.png" alt="Codeforces" />
-  </a>
-  <a href="https://imam-hosen.netlify.app/">
-    <img src="https://img.icons8.com/ios-filled/50/000000/domain.png" alt="Portfolio" />
-  </a>
-</div>
-
 ---
 
 ## Objective
