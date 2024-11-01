@@ -2,8 +2,6 @@
 
 **Full Stack Engineer**
 Barisal, Bangladesh
-📞 +8801733570761
-✉️ [mdimam.cse9.bu@gmail.com](mailto:mdimam.cse9.bu@gmail.com)
 
 ---
 
