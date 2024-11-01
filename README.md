@@ -26,7 +26,7 @@ Versatile Full-Stack Developer with robust learning agility and teamwork, eager 
   <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5" />
   <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3" />
   <img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E" alt="JavaScript" />
-  <img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=typescript&logoColor=F7DF1E" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/TypeScript-323330?style=for-the-badge&logo=typescript&logoColor=F7DF1E" alt="TypeScript" />
   <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
   <img src="https://img.shields.io/badge/Cloudinary-3448C5?style=for-the-badge&logo=cloudinary-css&logoColor=white" alt="Cloudinary" />
   <img src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white" alt="Npm" />
@@ -46,7 +46,6 @@ Versatile Full-Stack Developer with robust learning agility and teamwork, eager 
     <img src="https://img.icons8.com/color/48/000000/c-programming.png" alt="C" />
     <img src="https://img.icons8.com/color/48/000000/c-plus-plus-logo.png" alt="C++" />
     <img src="https://img.icons8.com/color/48/000000/javascript.png" alt="JavaScript" />
-    <img src="https://img.icons8.com/color/48/000000/typescript.png" alt="JavaScript" />
     <img src="https://img.icons8.com/color/48/000000/java-coffee-cup-logo.png" alt="Java" />
   </p>
 
