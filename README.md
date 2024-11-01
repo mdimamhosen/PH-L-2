@@ -41,22 +41,38 @@ Versatile Full-Stack Developer with robust learning agility and teamwork, eager 
 
   <h4>Web Development</h4>
   <p>
-    HTML, CSS, Tailwind CSS, JavaScript, ReactJS, Redux, RTK Query, NextJS, TypeScript, ExpressJS, REST APIs, MongoDB, MySQL, Mongoose, Nodemailer, Cloudinary
+    <img src="https://img.icons8.com/ios-filled/48/000000/html-5.png" alt="HTML" />
+    <img src="https://img.icons8.com/ios-filled/48/000000/css3.png" alt="CSS" />
+    <img src="https://img.icons8.com/ios-filled/48/000000/tailwindcss.png" alt="Tailwind CSS" />
+    <img src="https://img.icons8.com/ios-filled/48/000000/react-native.png" alt="ReactJS" />
+    <img src="https://img.icons8.com/ios-filled/48/000000/redux.png" alt="Redux" />
+    <img src="https://img.icons8.com/ios-filled/48/000000/express-js.png" alt="ExpressJS" />
+    <img src="https://img.icons8.com/ios-filled/48/000000/mongodb.png" alt="MongoDB" />
+    <img src="https://img.icons8.com/ios-filled/48/000000/mysql-logo.png" alt="MySQL" />
+    <img src="https://img.icons8.com/ios-filled/48/000000/typescript.png" alt="TypeScript" />
+    <img src="https://img.icons8.com/ios-filled/48/000000/nodemailer.png" alt="Nodemailer" />
+    <img src="https://img.icons8.com/ios-filled/48/000000/cloudinary.png" alt="Cloudinary" />
   </p>
 
   <h4>Development Tools</h4>
   <p>
-    VS Code, Version Control (Git), Postman (API Development and Testing)
+    <img src="https://img.icons8.com/ios-filled/48/000000/visual-studio-code-2019.png" alt="VS Code" />
+    <img src="https://img.icons8.com/ios-filled/48/000000/git.png" alt="Git" />
+    <img src="https://img.icons8.com/ios-filled/48/000000/postman.png" alt="Postman" />
   </p>
 
   <h4>Soft Skills</h4>
   <p>
-    Effective communication, Teamwork, Adaptability, Time management, Problem-solving
+    <img src="https://img.icons8.com/ios-filled/48/000000/team.png" alt="Teamwork" />
+    <img src="https://img.icons8.com/ios-filled/48/000000/adaptability.png" alt="Adaptability" />
+    <img src="https://img.icons8.com/ios-filled/48/000000/time-management.png" alt="Time Management" />
+    <img src="https://img.icons8.com/ios-filled/48/000000/problem-solving.png" alt="Problem Solving" />
   </p>
 
   <h4>Problem-Solving Platforms</h4>
   <p>
-    Codeforces (350+), LeetCode (100+)
+    <img src="https://img.icons8.com/ios-filled/48/000000/codeforces.png" alt="Codeforces" /> (350+)
+    <img src="https://img.icons8.com/ios-filled/48/000000/leetcode.png" alt="LeetCode" /> (100+)
   </p>
 </div>
 
