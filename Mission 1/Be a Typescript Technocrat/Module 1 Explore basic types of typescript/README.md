@@ -128,43 +128,31 @@ enum Direction {
 
 console.log(Direction.Up); // Output: 0
 ```
-
-## Interview Questions
+## 8. Interview Questions
 
 <details>
 <summary>What is TypeScript and how does it differ from JavaScript?</summary>
-<p>
-TypeScript is a superset of JavaScript that adds static typing and other features to enhance code quality and maintainability. The key difference is that TypeScript catches type-related errors during compile time, whereas JavaScript does this at runtime.
-</p>
+<p>TypeScript is a superset of JavaScript that adds static typing and other features to enhance code quality and maintainability. The key difference is that TypeScript catches type-related errors during compile time, whereas JavaScript does this at runtime.</p>
 </details>
 
 <details>
 <summary>What are the advantages of using interfaces in TypeScript?</summary>
-<p>
-Interfaces provide a clear contract for classes and objects, enabling better type checking and code organization. They support multiple inheritance and can be merged, making them very flexible in defining complex types.
-</p>
+<p>Interfaces provide a clear contract for classes and objects, enabling better type checking and code organization. They support multiple inheritance and can be merged, making them very flexible in defining complex types.</p>
 </details>
 
 <details>
 <summary>What is the purpose of generics in TypeScript?</summary>
-<p>
-Generics allow developers to create reusable functions, classes, and interfaces that can operate on a variety of types without sacrificing type safety. This leads to more flexible and maintainable code.
-</p>
+<p>Generics allow developers to create reusable functions, classes, and interfaces that can operate on a variety of types without sacrificing type safety. This leads to more flexible and maintainable code.</p>
 </details>
 
 <details>
 <summary>Explain the difference between a type alias and an interface.</summary>
-<p>
-Type aliases and interfaces can both be used to define object shapes, but type aliases can represent primitive types, unions, and tuples, while interfaces can be extended and implemented, supporting multiple inheritance. Interfaces are generally preferred for defining object types.
-</p>
+<p>Type aliases and interfaces can both be used to define object shapes, but type aliases can represent primitive types, unions, and tuples, while interfaces can be extended and implemented, supporting multiple inheritance. Interfaces are generally preferred for defining object types.</p>
 </details>
 
 <details>
 <summary>How do you define a tuple in TypeScript?</summary>
-<p>
-A tuple in TypeScript is defined using square brackets with specified types for each element. For example: <code>type UserTuple = [string, number];</code>
-</p>
+<p>A tuple in TypeScript is defined using square brackets with specified types for each element. For example: <code>type UserTuple = [string, number];</code></p>
 </details>
-
 
 ````
