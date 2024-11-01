@@ -46,7 +46,7 @@ Versatile Full-Stack Developer with robust learning agility and teamwork, eager 
     <img src="https://img.icons8.com/color/48/000000/c-programming.png" alt="C" />
     <img src="https://img.icons8.com/color/48/000000/c-plus-plus-logo.png" alt="C++" />
     <img src="https://img.icons8.com/color/48/000000/javascript.png" alt="JavaScript" />
-    <img src="https://img.icons8.com/color/48/000000/typescrip.png" alt="JavaScript" />
+    <img src="https://img.icons8.com/color/48/000000/typescript.png" alt="JavaScript" />
     <img src="https://img.icons8.com/color/48/000000/java-coffee-cup-logo.png" alt="Java" />
   </p>
 
