@@ -45,5 +45,33 @@
   };
   console.log(user3); // { name: 'John', age: 30, rollNumber: 123, isStudent: true }
 
+  // js --- > object , array --- > object , function --- > object
+
+  type Roll = number[] | number;
+
+  let roll: Roll = [1, 2, 3];
+  console.log(roll); // [ 1, 2, 3 ]
+  roll = 1;
+  console.log(roll); // 1
+
+  // here we have used interface for array where index is number and value is number as well, so we need to use index signature and type assertion as well to make it work as expected in typescript as below :
+  interface Roll2 {
+    [index: number]: number;
+  }
+  let roll2: Roll2 = [1, 2, 3];
+
+  type Add = (a: number, b: number) => number;
+
+  let add: Add = (a, b) => a + b;
+
+  console.log(add(1, 2)); // 3
+  //   console.log(add("1", 2)); // error
+
+  interface Add2 {
+    (a: number, b: number): number;
+  }
+  const add2: Add2 = (a, b) => a + b;
+  console.log(add2(1, 4)); // 3
+
   //
 }
