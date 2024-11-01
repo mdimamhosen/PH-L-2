@@ -53,27 +53,6 @@ Versatile Full-Stack Developer with robust learning agility and teamwork, eager 
 
 ---
 
-## Projects
-
-### [EduCoder](your-educoder-live-link) | [GitHub](your-educoder-github-link)
-
-- **Interactive E-Learning Platform**: Developed a dynamic platform connecting students and instructors, featuring an intuitive user interface for seamless course navigation and engagement.
-- **Role-Based Dashboard**: Implemented a dashboard for instructors to add and sell courses, manage content, and engage with students while providing personalized access to enrolled courses and a shopping cart for purchases.
-- **User Authentication & Course Administration**: Integrated NextAuth.js for secure user authentication, with Redux and Mongoose for course and payment management, utilizing Cloudinary for media storage.
-  **Tech Stack**: Next.js, TypeScript, NextAuth.js, Redux, MongoDB, Mongoose, Cloudinary, Nodemailer
-
----
-
-### [LifeFlow](your-lifeflow-live-link) | [GitHub](your-lifeflow-github-link)
-
-- **Robust Donation Infrastructure**: Architected a secure donation system powered by Stripe, facilitating real-time blood donation matching.
-- **Comprehensive User Profiles**: Built user profiles showcasing medical history, donation eligibility, and matching features for donors and recipients.
-- **Notifications and User Engagement**: Implemented email notifications and automated reminders to ensure engagement and timely donations.
-
-**Tech Stack**: React.js, Express.js, MongoDB, Stripe, Firebase, Tailwind CSS
-
----
-
 ## Education
 
 ### B.Sc in Computer Science and Engineering
