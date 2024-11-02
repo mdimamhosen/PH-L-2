@@ -1,4 +1,3 @@
-````markdown
 # TypeScript Module 2 Notes
 
 ### Table of Contents
@@ -36,6 +35,7 @@ function narrowType(val: string | number) {
   }
 }
 ```
+
 ````
 
 **Interview Question**:
@@ -252,7 +252,5 @@ const person: ReadOnly<Person> = { name: "Alice", age: 25 };
 - **Q**: What is a mapped type?
   **A**: Mapped types create new types by modifying properties of an existing type.
 
-```
 
----
-```
+````
