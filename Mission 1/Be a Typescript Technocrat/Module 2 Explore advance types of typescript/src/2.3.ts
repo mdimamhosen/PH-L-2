@@ -66,5 +66,26 @@
   ];
   console.log(humanObject); // [{ name: 'John', age: 28 }, 'Jane', true]
 
+  // here we decalre a type Human which is a tuple of 3 elements
+  // then we declare a variable personType which is an object with 3 properties
+  // then we declare a variable person2 which is a tuple of 3 elements
+  // then we assign the values to the tuple
+  // then we log the tuple
+  type personType = {
+    name: string;
+    age: number;
+    isStudent: boolean;
+  };
+
+  const person2: Human<personType, string, boolean> = [
+    {
+      name: "John",
+      age: 28,
+      isStudent: true,
+    },
+    "Jane",
+    true,
+  ];
+  console.log(person2); // [{ name: 'John', age: 28, isStudent: true }, 'Jane', true]    // --->> Generic Tuple
   //
 }

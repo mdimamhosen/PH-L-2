@@ -1,183 +1,258 @@
-# TypeScript Type Assertions, Interfaces, Types, Inference, and Generics
+````markdown
+# TypeScript Module 2 Notes
 
-This code repository covers essential TypeScript concepts, including type assertions, interfaces, types, inference, and generics. These concepts enable the creation of type-safe, reusable code by defining structures and enabling flexibility in handling multiple data types.
+### Table of Contents
 
-## 1. Type Assertions
+1. [Type Assertion / Type Narrowing](#type-assertion--type-narrowing)
+2. [Interface, Type vs Interface](#interface-type-vs-interface)
+3. [Introduction to Generics](#introduction-to-generics)
+4. [Generics with Interface](#generics-with-interface)
+5. [Function with Generics](#function-with-generics)
+6. [Constraints in TypeScript](#constraints-in-typescript)
+7. [Constraints using `keyof`](#constraints-using-keyof)
+8. [Asynchronous TypeScript](#asynchronous-typescript)
+9. [Conditional Types](#conditional-types)
+10. [Mapped Types](#mapped-types)
 
-Type assertions allow treating a variable as a specific type, especially useful when working with `any` or union types (`number | string`). This example includes assertions to manipulate strings and numbers, and demonstrates type-safe error handling.
+---
+
+## 2-1: Type Assertion / Type Narrowing
+
+**Definition**: Type assertion is a way to tell TypeScript to treat a value as a certain type. Type narrowing involves refining the type of a variable to a more specific type.
+
+**Example**:
 
 ```typescript
-let anything: any;
-anything = "hello";
-let strLength = (anything as string).length; // Assert 'anything' as a string
-console.log(strLength); // Outputs the string length
+let value: any = "Hello, TypeScript!";
+// Type Assertion
+let strLength: number = (value as string).length;
 
-anything = 123;
-console.log((anything as number).toFixed(2)); // Assert 'anything' as a number and format it
-
-const convertValue = (value: number | string): string => {
-  if (typeof value === "number") {
-    return `The converted value is ${value.toFixed(2)}`;
+// Type Narrowing
+function narrowType(val: string | number) {
+  if (typeof val === "string") {
+    console.log("String length:", val.length);
   } else {
-    return `The converted value is ${parseFloat(value).toFixed(2)}`;
+    console.log("Square:", val * val);
   }
-};
-
-const res1 = convertValue(123);
-const res2 = convertValue("123");
-console.log(res1, res2); // Outputs formatted values
-
-interface CustomError extends Error {
-  message: string;
-}
-
-try {
-  // Example try-catch with a custom error interface
-} catch (error) {
-  console.log((error as CustomError).message);
 }
 ```
+````
 
-## 2. Interfaces, Types, and Inference
+**Interview Question**:
 
-This section demonstrates TypeScript interfaces, types, and type inference. Interfaces and types allow defining object structures and function signatures for consistent and type-safe usage.
+- **Q**: What is type assertion in TypeScript?
+  **A**: Type assertion allows you to specify a type for a variable to avoid TypeScript errors. It’s like telling TypeScript, "Trust me, I know what I'm doing."
 
-### Code Example
+---
+
+## 2-2: Interface, Type vs Interface
+
+**Definition**: Interfaces are used to define the shape of an object, while types can define more complex structures, including unions and intersections. Types and interfaces are similar, but interfaces are more suited for object shapes.
+
+**Example**:
 
 ```typescript
+// Using interface
+interface User {
+  name: string;
+  age: number;
+}
+
+// Using type
+type Product = {
+  id: number;
+  name: string;
+};
+
+const user: User = { name: "Alice", age: 25 };
+const product: Product = { id: 1, name: "Laptop" };
+```
+
+**Interview Question**:
+
+- **Q**: What is the difference between a type and an interface?
+  **A**: Interfaces are best for defining object structures, while types are more flexible and can define complex structures, including unions.
+
+---
+
+## 2-3: Introduction to Generics
+
+**Definition**: Generics are a way to create reusable components that work with any data type, making the code flexible and type-safe.
+
+**Example**:
+
+```typescript
+function getItem<T>(item: T): T {
+  return item;
+}
+
+const num = getItem<number>(42); // T is number
+const str = getItem<string>("Hello"); // T is string
+```
+
+**Interview Question**:
+
+- **Q**: Why do we use generics in TypeScript?
+  **A**: Generics provide a way to make components flexible and reusable by allowing functions or classes to handle various types.
+
+---
+
+## 2-4: Generic with Interface
+
+**Definition**: Generics with interfaces allow us to define interfaces that can work with multiple types.
+
+**Example**:
+
+```typescript
+interface Box<T> {
+  contents: T;
+}
+
+const stringBox: Box<string> = { contents: "Books" };
+const numberBox: Box<number> = { contents: 42 };
+```
+
+**Interview Question**:
+
+- **Q**: Can we use generics with interfaces?
+  **A**: Yes, generics with interfaces allow interfaces to work with different types dynamically.
+
+---
+
+## 2-5: Function with Generics
+
+**Definition**: Generics in functions let you define a function that can work with different types without losing type safety.
+
+**Example**:
+
+```typescript
+function wrapInArray<T>(item: T): T[] {
+  return [item];
+}
+
+const numberArray = wrapInArray<number>(5); // [5]
+const stringArray = wrapInArray<string>("Hello"); // ["Hello"]
+```
+
+**Interview Question**:
+
+- **Q**: How do you declare a generic function in TypeScript?
+  **A**: By adding `<T>` before the function parameter list, where `T` is the generic type placeholder.
+
+---
+
+## 2-6: Constraints in TypeScript
+
+**Definition**: Constraints restrict a generic type to a specific set of properties or methods. This ensures the type has what is needed to perform certain actions.
+
+**Example**:
+
+```typescript
+function logLength<T extends { length: number }>(arg: T): T {
+  console.log(arg.length);
+  return arg;
+}
+
+logLength("Hello"); // Logs: 5
+logLength([1, 2, 3]); // Logs: 3
+```
+
+**Interview Question**:
+
+- **Q**: What is a constraint in generics?
+  **A**: Constraints limit a generic to a type that has certain properties, ensuring safety and utility.
+
+---
+
+## 2-7: Constraint using `keyof`
+
+**Definition**: The `keyof` constraint limits a generic type to the keys of an object.
+
+**Example**:
+
+```typescript
+function getProperty<T, K extends keyof T>(obj: T, key: K) {
+  return obj[key];
+}
+
+const person = { name: "Alice", age: 30 };
+console.log(getProperty(person, "name")); // "Alice"
+```
+
+**Interview Question**:
+
+- **Q**: What does `keyof` do in TypeScript?
+  **A**: `keyof` restricts a type to the keys of a specified object, improving type safety.
+
+---
+
+## 2-8: Asynchronous TypeScript
+
+**Definition**: TypeScript supports asynchronous programming with `async` and `await` just like JavaScript, but with type safety for promises.
+
+**Example**:
+
+```typescript
+async function fetchData(): Promise<string> {
+  return "Data fetched";
+}
+
+fetchData().then(console.log);
+```
+
+**Interview Question**:
+
+- **Q**: How does TypeScript handle async/await?
+  **A**: TypeScript allows async/await with type-safe promises to ensure the data returned matches the expected type.
+
+---
+
+## 2-9: Conditional Types
+
+**Definition**: Conditional types enable different types based on conditions. This can help make types more dynamic.
+
+**Example**:
+
+```typescript
+type IsString<T> = T extends string ? "It's a string" : "Not a string";
+
+type Test1 = IsString<string>; // "It's a string"
+type Test2 = IsString<number>; // "Not a string"
+```
+
+**Interview Question**:
+
+- **Q**: What is a conditional type?
+  **A**: A type that changes based on a condition, similar to a ternary operator but for types.
+
+---
+
+## 2-10: Mapped Types
+
+**Definition**: Mapped types allow creating new types by transforming properties of an existing type.
+
+**Example**:
+
+```typescript
+type ReadOnly<T> = {
+  readonly [P in keyof T]: T[P];
+};
+
 interface Person {
   name: string;
   age: number;
 }
-let person: Person = {
-  name: "John",
-  age: 30,
-};
-console.log(person);
 
-type rollNumber = number;
-
-type userWithRollNumber = Person & { rollNumber: rollNumber };
-let user: userWithRollNumber = {
-  name: "John",
-  age: 30,
-  rollNumber: 123,
-};
-console.log(user); // { name: 'John', age: 30, rollNumber: 123 }
-
-interface isStudent {
-  isStudent: boolean;
-}
-
-interface userWithRollNumberInterface
-  extends Person,
-    isStudent,
-    userWithRollNumber {}
-let user3: userWithRollNumberInterface = {
-  name: "John",
-  age: 30,
-  rollNumber: 123,
-  isStudent: true,
-};
-console.log(user3); // { name: 'John', age: 30, rollNumber: 123, isStudent: true }
-
-type Roll = number[] | number;
-
-let roll: Roll = [1, 2, 3];
-console.log(roll); // [ 1, 2, 3 ]
-roll = 1;
-console.log(roll); // 1
-
-interface Roll2 {
-  [index: number]: number;
-}
-let roll2: Roll2 = [1, 2, 3];
-
-type Add = (a: number, b: number) => number;
-let add: Add = (a, b) => a + b;
-console.log(add(1, 2)); // 3
-
-interface Add2 {
-  (a: number, b: number): number;
-}
-const add2: Add2 = (a, b) => a + b;
-console.log(add2(1, 4)); // 5
+const person: ReadOnly<Person> = { name: "Alice", age: 25 };
+// person.age = 30; // Error: age is read-only
 ```
 
-## 3. Generics in TypeScript
+**Interview Question**:
 
-Generics provide a way to create reusable components that work over a variety of types rather than a single one. This increases code flexibility and type safety by ensuring that data types are enforced based on how they are used.
+- **Q**: What is a mapped type?
+  **A**: Mapped types create new types by modifying properties of an existing type.
 
-### Generics Example
-
-```typescript
-const rollNumber: number[] = [1, 2, 3, 4, 5];
-const mentors: string[] = ["John", "Doe", "Jane", "Doe"];
-const boolArray: boolean[] = [true, false, true, false];
-
-console.log(rollNumber);
-console.log(mentors);
-console.log(boolArray);
-
-// Using Array<T> generic syntax
-const rollNumber2: Array<number> = [1, 2, 3, 4, 5];
-const mentors2: Array<string> = ["John", "Doe", "Jane", "Doe"];
-const boolArray2: Array<boolean> = [true, false, true, false];
-
-console.log(rollNumber2);
-console.log(mentors2);
-console.log(boolArray2);
-
-// Defining a custom generic type
-type GenericType<T> = Array<T>;
-
-const rollNumber3: GenericType<number> = [1, 2, 3, 4, 5];
-const mentors3: GenericType<string> = ["John", "Doe", "Jane", "Doe"];
-const boolArray3: GenericType<boolean> = [true, false, true, false];
-
-type T = number | string | boolean;
-const genericArray: GenericType<T> = [1, true, "imam"];
-console.log(genericArray);
-
-// Using a generic type for objects
-const newUser: GenericType<{
-  name: string;
-  age: number;
-}> = [
-  { name: "John", age: 28 },
-  { name: "Jane", age: 25 },
-];
-console.log(newUser);
 ```
 
-### Generic Tuple Example
-
-Generic tuples allow specifying multiple types for tuple elements, increasing type flexibility for multiple values.
-
-```typescript
-type Human<x, y, z> = [x, y, z];
-
-const human: Human<string, number, boolean> = ["John", 28, true];
-
-console.log(human); // ["John", 28, true]
-
-const humanObject: Human<{ name: string; age: number }, string, boolean> = [
-  { name: "John", age: 28 },
-  "Jane",
-  true,
-];
-console.log(humanObject); // [{ name: 'John', age: 28 }, 'Jane', true]
+---
 ```
-
-## Key Interview Questions
-
-1. **What is the difference between interfaces and types in TypeScript?**
-2. **How can interfaces be extended to add properties?**
-3. **What is the benefit of using type aliases for complex types?**
-4. **How does TypeScript handle multiple inheritance with interfaces?**
-5. **What are type assertions, and how do they help in working with union types?**
-6. **Why is defining a custom error interface useful in TypeScript?**
-7. **What are generics, and how do they help in building reusable components?**
-8. **How can you create a generic function that accepts multiple data types?**
-9. **What is the difference between using `Array<T>` and `T[]` in TypeScript?**
-10. **How can you create a generic tuple type?**
