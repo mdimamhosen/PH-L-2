@@ -1,5 +1,5 @@
 {
-  // Object Oriented Programming
+  // Object Oriented Programming in TypeScript (OOP)
 
   // Class Property in OOP
   class Animal {
