@@ -14,7 +14,7 @@ This document provides notes on essential MongoDB operations and concepts with e
 
 ### Installation Steps (Windows)
 1. **MongoDB Compass**:
-   - Download MongoDB Compass from the [MongoDB official website](https://www.mongodb.com/products/compass).
+   - Download MongoDB Compass Community Version from the [MongoDB official website](https://www.mongodb.com/products/compass).
    - Run the installer and follow the instructions.
    - After installation, launch the Compass application.
 
