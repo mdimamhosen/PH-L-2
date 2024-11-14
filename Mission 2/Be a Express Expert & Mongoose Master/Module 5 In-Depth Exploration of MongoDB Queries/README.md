@@ -40,11 +40,4 @@
   db.collection.findOne({ field1: "value1" });
   ```
 
-### Field Filtering and `project`
-- Field filtering allows you to include or exclude specific fields in the query results.
-  - **`project`**: Specifies which fields to include or exclude.
-  ```javascript
-  db.collection.find({ field1: "value1" }, { field2: 1, field3: 0 });
-  ```
-  - `1` includes the field, while `0` excludes it.
  
