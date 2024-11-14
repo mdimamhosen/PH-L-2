@@ -30,14 +30,4 @@
   db.collection.insertOne({ field1: "value1", field2: "value2" });
   ```
 
-### `find` and `findOne`
-- **`find`**: Retrieves multiple documents matching the query criteria.
-  ```javascript
-  db.collection.find({ field1: "value1" });
-  ```
-- **`findOne`**: Retrieves a single document that matches the query criteria.
-  ```javascript
-  db.collection.findOne({ field1: "value1" });
-  ```
-
  
