@@ -20,7 +20,6 @@ This document provides notes on essential MongoDB operations and concepts with e
 
 2. **NoSQL Booster**:
    - Download NoSQL Booster from [https://nosqlbooster.com/](https://nosqlbooster.com/).
-   - Follow the installation steps provided on the website.
    - Launch NoSQL Booster once installed.
 
 ---
