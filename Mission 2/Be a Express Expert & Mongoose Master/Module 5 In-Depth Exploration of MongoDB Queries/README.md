@@ -16,7 +16,6 @@ This document provides notes on essential MongoDB operations and concepts with e
 1. **MongoDB Compass**:
    - Download MongoDB Compass Community Version from the [MongoDB official website](https://www.mongodb.com/products/compass).
    - Run the installer and follow the instructions.
-   - After installation, launch the Compass application.
 
 2. **NoSQL Booster**:
    - Download NoSQL Booster from [https://nosqlbooster.com/](https://nosqlbooster.com/).
