@@ -312,6 +312,4 @@ db.users.drop();
 ```
 
 ### Drop Collection Example:
-```javascript
  
-```
