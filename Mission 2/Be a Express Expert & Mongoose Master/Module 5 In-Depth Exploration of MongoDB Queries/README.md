@@ -313,6 +313,5 @@ db.users.drop();
 
 ### Drop Collection Example:
 ```javascript
-// Drop the entire 'users' collection
-db.users.drop();
+ 
 ```
