@@ -310,5 +310,4 @@ db.users.find().sort({ age: 1 });
 // Drop the entire 'users' collection
 db.users.drop();
 ```
-
-###  
+ 
