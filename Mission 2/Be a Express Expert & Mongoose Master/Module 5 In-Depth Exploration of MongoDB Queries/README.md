@@ -1,5 +1,5 @@
 
-# MongoDB Operations and Concepts
+# MongoDB Operations  
 
 This document provides notes on essential MongoDB operations and concepts with examples for each of the following topics.
 
