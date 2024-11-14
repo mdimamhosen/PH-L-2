@@ -311,5 +311,4 @@ db.users.find().sort({ age: 1 });
 db.users.drop();
 ```
 
-### Drop Collection Example:
- 
+###  
