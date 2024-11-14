@@ -18,16 +18,5 @@
   3. Open NoSQL Booster and connect to your MongoDB instance.
 
 
-## 5-2: MongoDB CRUD Operations
-
-### `insert` and `insertOne`
-- **`insert`**: Inserts multiple documents into a collection.
-  ```javascript
-  db.collection.insert([{ field1: "value1" }, { field1: "value2" }]);
-  ```
-- **`insertOne`**: Inserts a single document into a collection.
-  ```javascript
-  db.collection.insertOne({ field1: "value1", field2: "value2" });
-  ```
-
+ 
  
