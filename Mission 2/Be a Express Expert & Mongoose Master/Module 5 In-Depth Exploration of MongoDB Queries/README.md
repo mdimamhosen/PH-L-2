@@ -283,8 +283,129 @@ db.users.updateOne(
 
 ## 5-10 More about `$set`, How to Explore Documentation
 
-- **`$set`**: Used to update fields or add new fields to documents.
-- **Exploring MongoDB Documentation**: Always check the [official MongoDB documentation](https://docs.mongodb.com/) for more examples and detailed explanations on each operator.
+Here’s a detailed explanation of the `$set` operator in MongoDB, including its use with positional operators and examples for arrays, objects, nested objects, and nested arrays, formatted as a `README.md` file:
+
+```markdown
+# MongoDB `$set` Operator and Positional Operators
+
+The `$set` operator in MongoDB is used to update the value of a field in a document. If the field does not exist, `$set` creates it.
+
+This document explains `$set` in detail, including its use with positional operators to handle arrays, objects, nested objects, and nested arrays.
+
+## Basic Usage of `$set`
+
+```javascript
+db.collection.updateOne(
+  { _id: 1 },
+  { $set: { field: "newValue" } }
+);
+```
+
+## Using `$set` with Arrays
+
+### Update Specific Array Element with Positional Operator `$`
+
+The `$` operator identifies the first array element that matches the query.
+
+#### Example: Update the first matching element
+```javascript
+db.students.updateOne(
+  { _id: 1, grades: { $gte: 80 } },
+  { $set: { "grades.$": 85 } }
+);
+```
+**Explanation**: Updates the first grade `>= 80` to `85`.
+
+### Update Specific Index in Array
+```javascript
+db.students.updateOne(
+  { _id: 1 },
+  { $set: { "grades.2": 90 } }
+);
+```
+**Explanation**: Updates the third element in the `grades` array to `90`.
+
+---
+
+## Using `$set` with Nested Objects
+
+### Example: Add or Update Fields in Nested Objects
+```javascript
+db.users.updateOne(
+  { _id: 1 },
+  { $set: { "profile.name": "John Doe" } }
+);
+```
+**Explanation**: Updates the `name` field in the `profile` sub-document.
+
+### Example: Update Nested Fields
+```javascript
+db.users.updateOne(
+  { _id: 1 },
+  { $set: { "profile.address.city": "New York" } }
+);
+```
+**Explanation**: Updates the `city` field in the nested `address` object inside `profile`.
+
+---
+
+## Using `$set` with Nested Arrays
+
+### Update an Element in a Nested Array with Positional Operator
+```javascript
+db.orders.updateOne(
+  { _id: 1, "items.product": "Laptop" },
+  { $set: { "items.$.quantity": 10 } }
+);
+```
+**Explanation**: Updates the `quantity` field for the first `items` array element where `product` is `Laptop`.
+
+### Update All Elements in a Nested Array Using `$[]`
+The `$[]` operator updates all elements in an array.
+
+```javascript
+db.orders.updateOne(
+  { _id: 1 },
+  { $set: { "items.$[].discount": 5 } }
+);
+```
+**Explanation**: Adds a `discount` field with a value of `5` to all elements in the `items` array.
+
+---
+
+## Using `$set` with Conditions in Nested Arrays
+
+### Example: Update Specific Nested Array Elements
+```javascript
+db.orders.updateOne(
+  { _id: 1 },
+  { $set: { "items.$[item].discount": 10 } },
+  { arrayFilters: [{ "item.product": "Phone" }] }
+);
+```
+**Explanation**: Adds a `discount` field with a value of `10` to all `items` where the `product` is `Phone`.
+
+---
+
+## Other Examples
+
+### Adding New Fields to Documents
+```javascript
+db.products.updateOne(
+  { _id: 1 },
+  { $set: { "specifications.color": "red" } }
+);
+```
+**Explanation**: Adds a `color` field in the `specifications` sub-document.
+
+### Updating Elements in Nested Arrays of Objects
+```javascript
+db.projects.updateOne(
+  { _id: 1, "tasks.id": 101 },
+  { $set: { "tasks.$.status": "completed" } }
+);
+```
+**Explanation**: Updates the `status` field of the first `tasks` array element where `id` is `101`.
 
 ---
 
