@@ -283,93 +283,257 @@ db.users.updateOne(
 
 ## 5-10 More about `$set`, How to Explore Documentation
 
-Here’s a detailed explanation of the `$set` operator in MongoDB, including its use with positional operators and examples for arrays, objects, nested objects, and nested arrays, formatted as a `README.md` file:
+# MongoDB `$set` Operator with Positional Operators
 
-```markdown
-# MongoDB `$set` Operator and Positional Operators
+## Overview
 
-The `$set` operator in MongoDB is used to update the value of a field in a document. If the field does not exist, `$set` creates it.
+The `$set` operator in MongoDB is used to update specific fields of a document. It can also add new fields if they do not exist. When working with arrays or nested structures, positional operators (like `$` and `$[<identifier>]`) allow precise updates.
 
-This document explains `$set` in detail, including its use with positional operators to handle arrays, objects, nested objects, and nested arrays.
+---
 
-## Basic Usage of `$set`
+## Basic Syntax of `$set`
 
-```javascript
+```json
+{
+  "$set": {
+    "field": <value>
+  }
+}
+```
+
+- **field**: The field to update.
+- **value**: The new value to set.
+
+---
+
+## Examples with Positional Operators
+
+### 1. Update the First Matching Array Element (`$`)
+
+The `$` operator updates the first matching element in an array.
+
+#### Example
+
+```json
+// Sample Document
+{
+  "_id": 1,
+  "scores": [85, 90, 78]
+}
+
+// Update Query
 db.collection.updateOne(
-  { _id: 1 },
-  { $set: { field: "newValue" } }
-);
+  { _id: 1, "scores": 90 },
+  { $set: { "scores.$": 95 } }
+)
+
+// Updated Document
+{
+  "_id": 1,
+  "scores": [85, 95, 78]
+}
 ```
-
-## Using `$set` with Arrays
-
-### Update Specific Array Element with Positional Operator `$`
-
-The `$` operator identifies the first array element that matches the query.
-
-#### Example: Update the first matching element
-```javascript
-db.students.updateOne(
-  { _id: 1, grades: { $gte: 80 } },
-  { $set: { "grades.$": 85 } }
-);
-```
-**Explanation**: Updates the first grade `>= 80` to `85`.
-
-### Update Specific Index in Array
-```javascript
-db.students.updateOne(
-  { _id: 1 },
-  { $set: { "grades.2": 90 } }
-);
-```
-**Explanation**: Updates the third element in the `grades` array to `90`.
 
 ---
 
-## Using `$set` with Nested Objects
+### 2. Update All Matching Array Elements (`$[]`)
 
-### Example: Add or Update Fields in Nested Objects
-```javascript
-db.users.updateOne(
-  { _id: 1 },
-  { $set: { "profile.name": "John Doe" } }
-);
-```
-**Explanation**: Updates the `name` field in the `profile` sub-document.
-
-### Example: Update Nested Fields
-```javascript
-db.users.updateOne(
-  { _id: 1 },
-  { $set: { "profile.address.city": "New York" } }
-);
-```
-**Explanation**: Updates the `city` field in the nested `address` object inside `profile`.
-
----
-
-## Using `$set` with Nested Arrays
-
-### Update an Element in a Nested Array with Positional Operator
-```javascript
-db.orders.updateOne(
-  { _id: 1, "items.product": "Laptop" },
-  { $set: { "items.$.quantity": 10 } }
-);
-```
-**Explanation**: Updates the `quantity` field for the first `items` array element where `product` is `Laptop`.
-
-### Update All Elements in a Nested Array Using `$[]`
 The `$[]` operator updates all elements in an array.
 
-```javascript
-db.orders.updateOne(
-  { _id: 1 },
-  { $set: { "items.$[].discount": 5 } }
-);
+#### Example
+
+```json
+// Sample Document
+{
+  "_id": 2,
+  "grades": [60, 70, 80]
+}
+
+// Update Query
+db.collection.updateOne(
+  { _id: 2 },
+  { $set: { "grades.$[]": 85 } }
+)
+
+// Updated Document
+{
+  "_id": 2,
+  "grades": [85, 85, 85]
+}
 ```
-**Explanation**: Adds a `discount` field with a value of `5` to all elements in the `items` array.
+
+---
+
+### 3. Update Specific Array Elements Using Filters (`$[<identifier>]`)
+
+The `$[<identifier>]` operator updates elements based on a filter condition.
+
+#### Example
+
+```json
+// Sample Document
+{
+  "_id": 3,
+  "scores": [65, 90, 78]
+}
+
+// Update Query
+db.collection.updateOne(
+  { _id: 3 },
+  { $set: { "scores.$[score]": 100 } },
+  { arrayFilters: [{ "score": { $gte: 80 } }] }
+)
+
+// Updated Document
+{
+  "_id": 3,
+  "scores": [65, 100, 78]
+}
+```
+
+---
+
+### 4. Update Nested Objects
+
+You can use `$set` to update specific fields inside a nested object.
+
+#### Example
+
+```json
+// Sample Document
+{
+  "_id": 4,
+  "details": {
+    "name": "John",
+    "age": 25
+  }
+}
+
+// Update Query
+db.collection.updateOne(
+  { _id: 4 },
+  { $set: { "details.age": 30 } }
+)
+
+// Updated Document
+{
+  "_id": 4,
+  "details": {
+    "name": "John",
+    "age": 30
+  }
+}
+```
+
+---
+
+### 5. Update Nested Arrays
+
+You can use the `$` operator to update nested arrays.
+
+#### Example
+
+```json
+// Sample Document
+{
+  "_id": 5,
+  "categories": [
+    {
+      "name": "Electronics",
+      "items": ["TV", "Radio"]
+    },
+    {
+      "name": "Furniture",
+      "items": ["Table", "Chair"]
+    }
+  ]
+}
+
+// Update Query
+db.collection.updateOne(
+  { _id: 5, "categories.name": "Electronics" },
+  { $set: { "categories.$.items.0": "Smart TV" } }
+)
+
+// Updated Document
+{
+  "_id": 5,
+  "categories": [
+    {
+      "name": "Electronics",
+      "items": ["Smart TV", "Radio"]
+    },
+    {
+      "name": "Furniture",
+      "items": ["Table", "Chair"]
+    }
+  ]
+}
+```
+
+---
+
+### 6. Update Multiple Nested Elements with Array Filters
+
+When working with deeply nested arrays, you can use array filters to target specific elements.
+
+#### Example
+
+```json
+// Sample Document
+{
+  "_id": 6,
+  "orders": [
+    {
+      "orderId": 1,
+      "items": [
+        { "product": "Laptop", "price": 1000 },
+        { "product": "Mouse", "price": 50 }
+      ]
+    },
+    {
+      "orderId": 2,
+      "items": [
+        { "product": "Table", "price": 150 },
+        { "product": "Chair", "price": 75 }
+      ]
+    }
+  ]
+}
+
+// Update Query
+db.collection.updateOne(
+  { _id: 6 },
+  { $set: { "orders.$[order].items.$[item].price": 200 } },
+  {
+    arrayFilters: [
+      { "order.orderId": 2 },
+      { "item.product": "Chair" }
+    ]
+  }
+)
+
+// Updated Document
+{
+  "_id": 6,
+  "orders": [
+    {
+      "orderId": 1,
+      "items": [
+        { "product": "Laptop", "price": 1000 },
+        { "product": "Mouse", "price": 50 }
+      ]
+    },
+    {
+      "orderId": 2,
+      "items": [
+        { "product": "Table", "price": 150 },
+        { "product": "Chair", "price": 200 }
+      ]
+    }
+  ]
+}
+```
 
 ---
 
