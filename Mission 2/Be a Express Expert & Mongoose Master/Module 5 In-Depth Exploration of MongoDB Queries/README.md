@@ -1,10 +1,6 @@
 
 # MongoDB Operations  
 
-## What is MongoDB Aggregation?
-
-### MongoDB Aggregation is a powerful framework for data aggregation operations, such as filtering, transforming, and summarizing data stored in a MongoDB collection. It processes data records and returns computed results. Aggregation operations group values from multiple documents together and can perform a variety of operations on the grouped data to return a single result.
-
 ---
 
 ## 5-1-A Install MongoDB Compass & NoSQL Booster (Windows)
