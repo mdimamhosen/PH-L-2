@@ -1,9 +1,5 @@
 # MongoDB Aggregation Framework and Indexing Guide
 
-This guide provides an overview of key MongoDB aggregation stages and indexing concepts with examples. It covers practical use cases, code snippets, and explanations.
-
----
-
 ## **1. Introduction to Aggregation Framework**
 
 The aggregation framework is a powerful tool in MongoDB for data transformation and computation. It processes data in a pipeline, where each stage performs an operation on the input and passes the result to the next stage.
