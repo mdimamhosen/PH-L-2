@@ -1,5 +1,5 @@
- # MongoDB Aggregation Framework and Indexing Guide
-<!--
+# MongoDB Aggregation Framework and Indexing Guide
+
 ## **1. Introduction to Aggregation Framework**
 
 The aggregation framework is a powerful tool in MongoDB for data transformation and computation. It processes data in a pipeline, where each stage performs an operation on the input and passes the result to the next stage.
@@ -296,4 +296,4 @@ db.orders.aggregate([
 
 - Use `$sort` and `$limit` for optimization.
 - Always consider proper indexing strategies.
-- Use `$merge` and `$out` cautiously to avoid data overwrite. -->
+- Use `$merge` and `$out` cautiously to avoid data overwrite.
