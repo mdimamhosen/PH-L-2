@@ -17,7 +17,3 @@ function findPrimes(limit) {
   }
   return primes;
 }
-
-const limit = 50;
-const primesUpToLimit = findPrimes(limit);
-console.log(`Prime numbers up to ${limit}:`, primesUpToLimit);
