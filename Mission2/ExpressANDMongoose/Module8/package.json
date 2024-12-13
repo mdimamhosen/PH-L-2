@@ -8,7 +8,10 @@
     "build": "tsc",
     "lint": "eslint \"src/**/*.ts\"",
     "lint:fix": "npx eslint src --fix",
-    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
+    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
+    "start:dev": "ts-node-dev --respawn --transpile-only ./src/server.ts",
+    "start:prod": "node ./dist/server.js",
+    "start": "nodemon ./dist/server.js"
   },
   "keywords": [],
   "author": "",
@@ -17,8 +20,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.1",
-    "mongoose": "^8.8.3",
-    "nodemon": "^3.1.7"
+    "mongoose": "^8.8.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.16.0",
@@ -31,7 +33,9 @@
     "eslint": "^9.16.0",
     "eslint-config-prettier": "^9.1.0",
     "globals": "^15.13.0",
+    "nodemon": "^3.1.7",
     "prettier": "^3.4.2",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.18.0"
   }

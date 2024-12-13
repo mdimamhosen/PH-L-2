@@ -1,21 +1,27 @@
 import app from './app';
 import config from './app/config';
 import mongoose from 'mongoose';
+
 const port = process.env.PORT || 3000;
+
+let isConnected = false;
 
 async function main() {
   try {
-    await mongoose.connect(config.mongoUri as string);
-    console.log('Connected to database');
+    const connection = await mongoose.connect(config.mongoUri as string);
+
+    if (!isConnected) {
+      console.log(`Connected to database ${connection.connection.host}`);
+      isConnected = true;
+    }
   } catch (error) {
     console.error(error);
     process.exit(1);
   }
 }
+
 main();
 
-console.log(process.cwd());
-
-app.listen(config.port, () =>
-  console.log(`Example app listening on port ${port}!`),
-);
+app.listen(config.port, () => {
+  console.log(`Example app listening on port ${port}!`);
+});

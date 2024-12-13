@@ -11,4 +11,5 @@ export default {
   jwtRefreshSecret: process.env.JWT_REFRESH_SECRET,
   jwtRefreshExpiration: process.env.JWT_REFRESH_EXPIRATION,
   jwtCookieName: process.env.JWT_COOKIE_NAME,
+  nodeEnv: process.env.NODE_ENV,
 };
