@@ -1,6 +1,8 @@
+import { Model } from 'mongoose';
+
 export type Name = {
   firstName: string;
-  middleName: string;
+  middleName?: string;
   lastName: string;
 };
 export type Guardian = {
@@ -14,6 +16,7 @@ export type Address = {
 };
 export interface Student {
   id: string;
+  password: string;
   name: Name;
   age: number;
   email: string;
@@ -26,4 +29,22 @@ export interface Student {
   guardian: Guardian;
   profilePicture?: string;
   isActive: boolean;
+  isDeleted: boolean;
+}
+
+// For creating custom instance methods
+// export interface StudentMethod {
+//   isUserExist(id: string): Promise<Student | null>;
+// }
+
+// export type StudentModelMethod = Model<
+//   Student,
+//   Record<string, never>,
+//   StudentMethod
+// >;
+
+// For creating custom static methods
+
+export interface StudentStaticMethodModel extends Model<Student> {
+  isUserExist(id: string): Promise<Student | null>;
 }
