@@ -1,4 +1,4 @@
-import { Model } from 'mongoose';
+import { Model } from "mongoose";
 
 export type Name = {
   firstName: string;
@@ -20,12 +20,12 @@ export interface Student {
   name: Name;
   age: number;
   email: string;
-  gender: 'Male' | 'Female';
+  gender: "Male" | "Female";
   contactNumber: string;
   emergencyContactNumber: string;
   address?: Address;
   dateOfBirth: Date;
-  bloodGroup?: 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-';
+  bloodGroup?: "A+" | "A-" | "B+" | "B-" | "AB+" | "AB-" | "O+" | "O-";
   guardian: Guardian;
   profilePicture?: string;
   isActive: boolean;
