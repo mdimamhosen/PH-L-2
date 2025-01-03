@@ -1,7 +1,7 @@
 # Md. Imam Hosen
 
 **Full Stack Engineer**
-Barisal, Bangladesh
+University Of Barishal, Bangladesh
 
 ---
 
