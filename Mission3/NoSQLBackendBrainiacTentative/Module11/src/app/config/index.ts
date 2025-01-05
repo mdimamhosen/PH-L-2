@@ -1,7 +1,7 @@
-import dotenv from "dotenv";
-import path from "path";
+import dotenv from 'dotenv';
+import path from 'path';
 
-dotenv.config({ path: path.join(process.cwd(), ".env") });
+dotenv.config({ path: path.join(process.cwd(), '.env') });
 
 export default {
   port: process.env.PORT || 3000,
@@ -13,4 +13,5 @@ export default {
   jwtCookieName: process.env.JWT_COOKIE_NAME,
   nodeEnv: process.env.NODE_ENV,
   bcryptSalt: process.env.BCRYPT_SALT,
+  defaultPassword: process.env.DEFAULT_PASSWORD,
 };

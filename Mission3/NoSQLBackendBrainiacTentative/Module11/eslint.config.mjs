@@ -19,7 +19,7 @@ export default [
     },
     rules: {
       semi: ['error', 'always'], // Enforce semicolons
-      quotes: ['warn', 'double'], // Enforce double quotes
+      // quotes: ['warn', 'double'], // Enforce double quotes
       '@typescript-eslint/no-unused-vars': [
         'error',
         { argsIgnorePattern: '^_' },
@@ -29,7 +29,7 @@ export default [
       'prefer-const': ['warn', { ignoreReadBeforeAssign: true }], // Prefer const for variables
       '@typescript-eslint/no-require-imports': 'off', // Disable the rule that forbids 'require',
       'no-unused-expressions': 'error',
-      'no-console': 'warn',
+      // 'no-console': 'warn',
       'no-undef': 'error',
     },
     ignores: ['.node_modules/*', 'dist/*', '.gitignore'], // Ignore node_modules and dist directories
