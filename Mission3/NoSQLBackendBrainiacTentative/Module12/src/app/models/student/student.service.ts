@@ -14,8 +14,6 @@ const getStudent = async (): Promise<Student[] | null> => {
 
 const getSingleStudent = async (id: string, res: Response): Promise<void> => {
   try {
-    console.log('id:-', id);
-    // const student = await StudentModel.findById({ _id: Object(id) });
     const student = await StudentModel.findById({ _id: Object(id) });
     console.log('student:-', student);
 

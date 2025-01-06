@@ -1,24 +1,25 @@
 import { NextFunction, Request, Response } from 'express';
 import { studentService } from './student.service';
+import sendResponse from '../../utils/sendResponse';
 
-const getStudent = async (req: Request, res: Response): Promise<void> => {
+const getStudent = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
   try {
     const student = await studentService.getStudent();
     if (!student) {
       throw new Error('An error occurred while retrieving the student');
     }
-
-    if (student) {
-      console.log('Student retrieved successfully');
-      res.status(200).json({
-        message: 'Student retrieved successfully',
-        data: student,
-        success: true,
-      });
-    }
+    sendResponse(res, {
+      success: true,
+      statusCode: 200,
+      message: 'Student retrieved successfully',
+      data: student,
+    });
   } catch (error) {
-    console.log('Error in retrieving student', error);
-    res.status(500).json({ message: 'Internal server error', success: false });
+    next(error);
   }
 };
 

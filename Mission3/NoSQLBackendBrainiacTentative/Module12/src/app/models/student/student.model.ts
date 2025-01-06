@@ -82,7 +82,7 @@ const StudentSchema = new Schema<Student, StudentStaticMethodModel>(
   {
     id: {
       type: String,
-      required: [true, 'Please provide a valid id'],
+
       unique: true,
     },
     user: {
