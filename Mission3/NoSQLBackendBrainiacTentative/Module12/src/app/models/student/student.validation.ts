@@ -85,6 +85,7 @@ const StudentValidationSchemaWithZod = z.object({
           ),
         relation: z.string().nonempty('Guardian relation is required'),
       }),
+      admissionSemester: z.string().optional(),
       profilePicture: z.string().optional(),
     }),
   }),

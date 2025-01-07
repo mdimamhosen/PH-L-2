@@ -1,35 +1,3 @@
-export interface TAacademicSemester {
-  name: 'Autumn' | 'Spring' | 'Fall';
-  code: '01' | '02' | '03';
-  year: string;
-  startMonth:
-    | 'January'
-    | 'February'
-    | 'March'
-    | 'April'
-    | 'May'
-    | 'June'
-    | 'July'
-    | 'August'
-    | 'September'
-    | 'October'
-    | 'November'
-    | 'December';
-  endMonth:
-    | 'January'
-    | 'February'
-    | 'March'
-    | 'April'
-    | 'May'
-    | 'June'
-    | 'July'
-    | 'August'
-    | 'September'
-    | 'October'
-    | 'November'
-    | 'December';
-}
-
 export type TMonths =
   | 'January'
   | 'February'
@@ -47,3 +15,14 @@ export type TMonths =
 export type TSemesterNames = 'Autumn' | 'Spring' | 'Fall';
 
 export type TSemesterCodes = '01' | '02' | '03';
+export type TSemisterNameCodeMapper = {
+  [key: string]: string;
+};
+
+export interface TAacademicSemester {
+  name: TSemesterNames;
+  code: TSemesterCodes;
+  year: string;
+  startMonth: TMonths;
+  endMonth: TMonths;
+}

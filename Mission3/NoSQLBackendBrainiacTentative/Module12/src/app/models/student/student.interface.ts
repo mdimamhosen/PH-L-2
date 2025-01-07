@@ -28,6 +28,7 @@ export interface Student {
   bloodGroup?: 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-';
   guardian: Guardian;
   profilePicture?: string;
+  admissionSemester: Types.ObjectId;
   isDeleted: boolean;
 }
 

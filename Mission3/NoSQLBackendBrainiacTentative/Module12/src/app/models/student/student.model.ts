@@ -129,6 +129,10 @@ const StudentSchema = new Schema<Student, StudentStaticMethodModel>(
     },
     guardian: { type: guardianSchema, required: true }, // Correct embedding
     profilePicture: { type: String, default: '' },
+    admissionSemester: {
+      type: Schema.Types.ObjectId,
+      ref: 'AcademicSemester',
+    },
     isDeleted: { type: Boolean, default: false },
   },
   {
