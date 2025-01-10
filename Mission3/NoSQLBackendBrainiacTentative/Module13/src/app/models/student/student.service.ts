@@ -1,107 +1,122 @@
-import { Response } from 'express';
-import { Student } from './student.interface';
-import StudentModel from './student.model';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import httpStatus from 'http-status';
+import mongoose from 'mongoose';
 
-const getStudent = async (): Promise<Student[] | null> => {
-  try {
-    const students = await StudentModel.find();
-    return students || null;
-  } catch (error) {
-    console.error('Error in retrieving student:', error);
-    return null;
-  }
+import { TStudent } from './student.interface';
+import { Student } from './student.model';
+import { AppError } from '../../utils/AppError';
+import UserModel from '../user/user.model';
+
+const getAllStudentsFromDB = async () => {
+  const result = await Student.find()
+    .populate('admissionSemester')
+    .populate({
+      path: 'academicDepartment',
+      populate: {
+        path: 'academicFaculty',
+      },
+    });
+
+  return result;
 };
 
-const getSingleStudent = async (id: string, res: Response): Promise<void> => {
-  try {
-    const student = await StudentModel.findById({ _id: Object(id) });
-    console.log('student:-', student);
-
-    if (!student) {
-      console.error('Student not found');
-      res.status(404).json({
-        message: 'Student not found',
-        success: false,
-      });
-      return;
-    }
-    if (student) {
-      console.log('Single student retrieved successfully');
-      res.status(200).json({
-        message: 'Student retrieved successfully',
-        data: student,
-        success: true,
-      });
-    }
-  } catch (error) {
-    console.error('Error in retrieving student:', error);
-    res.status(500).json({ message: 'Internal server error', success: false });
-  }
+const getSingleStudentFromDB = async (id: string) => {
+  const result = await Student.findOne({ id })
+    .populate('admissionSemester')
+    .populate({
+      path: 'academicDepartment',
+      populate: {
+        path: 'academicFaculty',
+      },
+    });
+  return result;
 };
 
-const deleteSingleStudent = async (id: string, res: Response) => {
+const updateStudentIntoDB = async (id: string, payload: Partial<TStudent>) => {
+  const { name, guardian, localGuardian, ...remainingStudentData } = payload;
+
+  const modifiedUpdatedData: Record<string, unknown> = {
+    ...remainingStudentData,
+  };
+
+  /*
+    guardain: {
+      fatherOccupation:"Teacher"
+    }
+
+    guardian.fatherOccupation = Teacher
+
+    name.firstName = 'Mezba'
+    name.lastName = 'Abedin'
+  */
+
+  if (name && Object.keys(name).length) {
+    for (const [key, value] of Object.entries(name)) {
+      modifiedUpdatedData[`name.${key}`] = value;
+    }
+  }
+
+  if (guardian && Object.keys(guardian).length) {
+    for (const [key, value] of Object.entries(guardian)) {
+      modifiedUpdatedData[`guardian.${key}`] = value;
+    }
+  }
+
+  if (localGuardian && Object.keys(localGuardian).length) {
+    for (const [key, value] of Object.entries(localGuardian)) {
+      modifiedUpdatedData[`localGuardian.${key}`] = value;
+    }
+  }
+
+  console.log(modifiedUpdatedData);
+
+  const result = await Student.findOneAndUpdate({ id }, modifiedUpdatedData, {
+    new: true,
+    runValidators: true,
+  });
+  return result;
+};
+
+const deleteStudentFromDB = async (id: string) => {
+  const session = await mongoose.startSession();
+
   try {
-    const student = await StudentModel.findByIdAndUpdate(
-      { _id: Object(id) },
+    session.startTransaction();
+
+    const deletedStudent = await Student.findOneAndUpdate(
+      { id },
       { isDeleted: true },
+      { new: true, session },
     );
-    if (!student) {
-      console.error('Student not found');
-      res.status(404).json({
-        message: 'Student not found',
-        success: false,
-      });
-      return;
+
+    if (!deletedStudent) {
+      throw new AppError(httpStatus.BAD_REQUEST, 'Failed to delete student');
     }
-    if (student) {
-      console.log('Student deleted successfully');
-      res.status(200).json({
-        message: 'Student deleted successfully',
-        success: true,
-      });
+
+    const deletedUser = await UserModel.findOneAndUpdate(
+      { id },
+      { isDeleted: true },
+      { new: true, session },
+    );
+
+    if (!deletedUser) {
+      throw new AppError(httpStatus.BAD_REQUEST, 'Failed to delete user');
     }
-  } catch (error) {
-    console.error('Error in retrieving student:', error);
-    res.status(500).json({ message: 'Internal server error', success: false });
+
+    await session.commitTransaction();
+    await session.endSession();
+
+    return deletedStudent;
+  } catch (err) {
+    await session.abortTransaction();
+    await session.endSession();
+    throw new Error('Failed to delete student');
   }
 };
 
-const updateSingleStudent = async (
-  id: string,
-  student: Student,
-  res: Response,
-): Promise<void> => {
-  try {
-    const updatedStudent = await StudentModel.findByIdAndUpdate(
-      { _id: Object(id) },
-      student,
-      { new: true },
-    );
-    if (!updatedStudent) {
-      console.error('Student not found');
-      res.status(404).json({
-        message: 'Student not found',
-        success: false,
-      });
-      return;
-    }
-    if (updatedStudent) {
-      console.log('Student updated successfully');
-      res.status(200).json({
-        message: 'Student updated successfully',
-        data: updatedStudent,
-        success: true,
-      });
-    }
-  } catch (error) {
-    console.error('Error in updating student:', error);
-    res.status(500).json({ message: 'Internal server error', success: false });
-  }
-};
-
-export const studentService = {
-  getStudent,
-  getSingleStudent,
-  deleteSingleStudent,
-  updateSingleStudent,
+export const StudentServices = {
+  getAllStudentsFromDB,
+  getSingleStudentFromDB,
+  updateStudentIntoDB,
+  deleteStudentFromDB,
 };

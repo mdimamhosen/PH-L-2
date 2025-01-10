@@ -1,13 +1,14 @@
 import express from 'express';
 import { UserController } from './user.controller';
-import { StudentValidation } from '../student/student.validation';
+
 import DataValidation from '../../middlewares/ValidateUserRequest';
+import { studentValidations } from '../student/student.validation';
 
 const router = express.Router();
 
 router.post(
   '/create-student',
-  DataValidation(StudentValidation.StudentValidationSchemaWithZod),
+  DataValidation(studentValidations.createStudentValidationSchema),
   UserController.createStudent,
 );
 

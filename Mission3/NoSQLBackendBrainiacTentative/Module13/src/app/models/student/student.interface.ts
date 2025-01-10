@@ -1,50 +1,62 @@
 import { Model, Types } from 'mongoose';
 
-export type Name = {
+export type TUserName = {
   firstName: string;
-  middleName?: string;
+  middleName: string;
   lastName: string;
 };
-export type Guardian = {
+
+export type TGuardian = {
+  fatherName: string;
+  fatherOccupation: string;
+  fatherContactNo: string;
+  motherName: string;
+  motherOccupation: string;
+  motherContactNo: string;
+};
+
+export type TLocalGuardian = {
   name: string;
-  contactNumber: string;
-  relation: string;
+  occupation: string;
+  contactNo: string;
+  address: string;
 };
-export type Address = {
-  permanentAddress: string;
-  currentAddress: string;
-};
-export interface Student {
+
+export type TStudent = {
   id: string;
   user: Types.ObjectId;
-  name: Name;
-  age: number;
+  password: string;
+  name: TUserName;
+  gender: 'male' | 'female' | 'other';
+  dateOfBirth?: Date;
   email: string;
-  gender: 'Male' | 'Female';
-  contactNumber: string;
-  emergencyContactNumber: string;
-  address?: Address;
-  dateOfBirth: Date;
-  bloodGroup?: 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-';
-  guardian: Guardian;
-  profilePicture?: string;
+  contactNo: string;
+  emergencyContactNo: string;
+  bloogGroup?: 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-';
+  presentAddress: string;
+  permanentAddress: string;
+  guardian: TGuardian;
+  localGuardian: TLocalGuardian;
+  profileImg?: string;
   admissionSemester: Types.ObjectId;
   isDeleted: boolean;
+  academicDepartment: Types.ObjectId;
+};
+
+//for creating static
+
+export interface StudentModel extends Model<TStudent> {
+  isUserExists(id: string): Promise<TStudent | null>;
 }
 
-// For creating custom instance methods
-// export interface StudentMethod {
-//   isUserExist(id: string): Promise<Student | null>;
+// for creating instance
+
+// export interface StudentMethods {
+//   isUserExists(id: string): Promise<TStudent | null>;
 // }
 
-// export type StudentModelMethod = Model<
-//   Student,
+// export type StudentModel = Model<
+//   TStudent,
 //   Record<string, never>,
-//   StudentMethod
+//   StudentMethods
 // >;
-
-// For creating custom static methods
-
-export interface StudentStaticMethodModel extends Model<Student> {
-  isUserExist(id: string): Promise<Student | null>;
-}

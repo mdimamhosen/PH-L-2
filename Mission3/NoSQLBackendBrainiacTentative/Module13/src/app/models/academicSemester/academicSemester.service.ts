@@ -1,10 +1,11 @@
+import { AppError } from '../../utils/AppError';
 import { SemisterCodeMapper } from './academicSemester.const';
 import { TAacademicSemester } from './academicSemester.interface';
 import { AcademicSemesterModel } from './academicSemester.model';
 
 const createAcademicSemester = async (payload: TAacademicSemester) => {
   if (SemisterCodeMapper[payload.code] !== payload.name) {
-    throw new Error('Semester code and name does not match');
+    throw new AppError(404, 'Semester code and name does not match');
   }
   const result = await AcademicSemesterModel.create(payload);
   return result;
@@ -29,7 +30,7 @@ const updateAcademicSemesterFromDB = async (
     payload.name &&
     SemisterCodeMapper[payload.code] !== payload.name
   ) {
-    throw new Error('Semester code and name does not match');
+    throw new AppError(404, 'Semester code and name does not match');
   }
 
   const result = await AcademicSemesterModel.findByIdAndUpdate(
