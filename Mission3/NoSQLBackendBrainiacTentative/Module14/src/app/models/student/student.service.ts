@@ -2,99 +2,34 @@
 import httpStatus from 'http-status';
 import mongoose from 'mongoose';
 
-import { TStudent } from './student.interface';
+import { StudentModel, TStudent } from './student.interface';
 import { Student } from './student.model';
 import { AppError } from '../../utils/AppError';
 import { User } from '../user/user.model';
+import QueryBuilder from '../../builder/QueryBuilder';
+import { studentSearchableFields } from './studnet.constant';
 
 const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
-  const searchField = [
-    'name.firstName',
-    'name.lastName',
-    'id',
-    'email',
-    'phone',
-    'address',
-  ];
+  const studentQueryBuilder = new QueryBuilder(
+    Student.find()
+      .populate('admissionSemester')
+      .populate({
+        path: 'academicDepartment',
+        populate: {
+          path: 'academicFaculty',
+        },
+      }),
+    query || {},
+  )
+    .searchTerm(studentSearchableFields)
+    .filter()
+    .sort()
+    .pagination()
+    .fields();
+  //  Here Student.find() is the model query and query is the query object ----> Very Important
 
-  const skipedFields = [
-    'limit',
-    'page',
-    'searchTerm',
-    'sort',
-    'select',
-    'fields',
-  ];
-
-  const queryObject = { ...query };
-
-  skipedFields.forEach(field => {
-    if (queryObject[field]) {
-      delete queryObject[field];
-    }
-  });
-
-  let searchTerm = '';
-  if (query?.searchTerm) {
-    searchTerm = query.searchTerm as string;
-  }
-
-  const searchQuery = Student.find({
-    $or: searchField.map(field => ({
-      [field]: { $regex: searchTerm, $options: 'i' },
-    })),
-  });
-  const filterQuery = searchQuery
-    .find(queryObject)
-    .populate('admissionSemester')
-    .populate({
-      path: 'academicDepartment',
-      populate: {
-        path: 'academicFaculty',
-      },
-    });
-
-  let sort = '-createdAt';
-
-  if (query?.sort) {
-    sort = query.sort as string;
-  }
-
-  const sortQuery = filterQuery.sort(sort);
-
-  let page = 1;
-  let skip = 0;
-  let limit = 1;
-
-  if (query?.limit) {
-    limit = parseInt(query.limit as string, 10);
-  }
-
-  if (query?.page) {
-    page = parseInt(query.page as string, 10);
-    skip = (page - 1) * limit;
-  }
-
-  const paginateQuery = sortQuery.skip(skip);
-
-  const limitQuery = paginateQuery.limit(limit);
-
-  // Field limiting Query
-
-  // Like select query in mongoose we can use select query to get only required fields from database. It is also called field limiting. like we have a document with 10 fields but we only want 5 fields to be returned from the database. We can use select query to get only required fields. It is also called field limiting. Example is given below.
-  // There are 10 field like name, email , phone, address etc in the document but we only want name and email to be returned from the database. We can use select query to get only required fields. Example is given below.
-  // const result = await Student.find().select('name email');
-  // It will return only name and email fields from the database.
-
-  let fields = '-__v';
-
-  if (query?.fields) {
-    fields = query.fields as string;
-  }
-  fields = fields.split(',').join(' ');
-  const fieldQuery = await limitQuery.select(fields);
-
-  return fieldQuery;
+  const result = await studentQueryBuilder.modelQuery;
+  return result;
 };
 
 const getSingleStudentFromDB = async (id: string) => {
