@@ -46,6 +46,7 @@ const globalErrorHandler: ErrorRequestHandler = (
     message = simplifiedError.message;
     errorSource = simplifiedError.errorSources;
   } else if (error instanceof AppError) {
+    console.log('AppError', error);
     statusCode = error.statusCode;
     message = error.message;
     errorSource = [
@@ -56,11 +57,12 @@ const globalErrorHandler: ErrorRequestHandler = (
     ];
   } else if (error instanceof Error) {
     statusCode = 500;
-    message = 'Internal server error';
+    const errorMessage = error?.message.replace(/^Error:\s*/, '');
+    message = errorMessage || 'Internal server  error';
     errorSource = [
       {
         path: '',
-        message: 'Something went wrong',
+        message: errorMessage || 'Something went wrong',
       },
     ];
   }

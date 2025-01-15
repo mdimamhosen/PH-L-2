@@ -1,9 +1,43 @@
-import { model, Schema } from 'mongoose';
-import { FacultyModel, TFaculty, TUserName } from './faculty.interface';
-import { BloodGroup, Gender } from './faculty.constant';
-import { AppError } from '../../utils/AppError';
-
-export const userNameSchema = new Schema<TUserName>({
+'use strict';
+var __awaiter =
+  (this && this.__awaiter) ||
+  function (thisArg, _arguments, P, generator) {
+    function adopt(value) {
+      return value instanceof P
+        ? value
+        : new P(function (resolve) {
+            resolve(value);
+          });
+    }
+    return new (P || (P = Promise))(function (resolve, reject) {
+      function fulfilled(value) {
+        try {
+          step(generator.next(value));
+        } catch (e) {
+          reject(e);
+        }
+      }
+      function rejected(value) {
+        try {
+          step(generator['throw'](value));
+        } catch (e) {
+          reject(e);
+        }
+      }
+      function step(result) {
+        result.done
+          ? resolve(result.value)
+          : adopt(result.value).then(fulfilled, rejected);
+      }
+      step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+  };
+Object.defineProperty(exports, '__esModule', { value: true });
+exports.Faculty = exports.userNameSchema = void 0;
+const mongoose_1 = require('mongoose');
+const faculty_constant_1 = require('./faculty.constant');
+const AppError_1 = require('../../utils/AppError');
+exports.userNameSchema = new mongoose_1.Schema({
   firstName: {
     type: String,
     required: [true, 'First Name is required'],
@@ -21,8 +55,7 @@ export const userNameSchema = new Schema<TUserName>({
     maxlength: [50, 'Last Name can not be more than 50 characters'],
   },
 });
-
-const facultySchema = new Schema<TFaculty, FacultyModel>(
+const facultySchema = new mongoose_1.Schema(
   {
     id: {
       type: String,
@@ -30,7 +63,7 @@ const facultySchema = new Schema<TFaculty, FacultyModel>(
       unique: true,
     },
     user: {
-      type: Schema.Types.ObjectId,
+      type: mongoose_1.Schema.Types.ObjectId,
       ref: 'User',
       required: [true, 'User is required'],
       unique: true,
@@ -40,13 +73,13 @@ const facultySchema = new Schema<TFaculty, FacultyModel>(
       required: [true, 'Designation is required'],
     },
     name: {
-      type: userNameSchema,
+      type: exports.userNameSchema,
       required: [true, 'Name is required'],
     },
     gender: {
       type: String,
       enum: {
-        values: Gender,
+        values: faculty_constant_1.Gender,
         message: '{VALUE} is not supported for gender.',
       },
       required: [true, 'Gender is required'],
@@ -78,7 +111,7 @@ const facultySchema = new Schema<TFaculty, FacultyModel>(
     bloodGroup: {
       type: String,
       enum: {
-        values: BloodGroup,
+        values: faculty_constant_1.BloodGroup,
         message: '{VALUE} is not supported for blood group.',
       },
     },
@@ -94,7 +127,7 @@ const facultySchema = new Schema<TFaculty, FacultyModel>(
       type: String,
     },
     academicDepartment: {
-      type: Schema.Types.ObjectId,
+      type: mongoose_1.Schema.Types.ObjectId,
       ref: 'AcademicDepartment',
       required: [true, 'Academic Department is required'],
     },
@@ -108,50 +141,49 @@ const facultySchema = new Schema<TFaculty, FacultyModel>(
     toJSON: { virtuals: true },
   },
 );
-
-facultySchema.statics.isUserExist = async function (email: string) {
-  return await this.findOne({ email, isDeleted: { $ne: true } });
+facultySchema.statics.isUserExist = function (email) {
+  return __awaiter(this, void 0, void 0, function* () {
+    return yield this.findOne({ email, isDeleted: { $ne: true } });
+  });
 };
 // chcking wheather any user with this email
-facultySchema.pre('save', async function (next) {
-  const existingFaculty = await Faculty.findOne({
-    email: this.email,
-    isDeleted: { $ne: true },
+facultySchema.pre('save', function (next) {
+  return __awaiter(this, void 0, void 0, function* () {
+    const existingFaculty = yield exports.Faculty.findOne({
+      email: this.email,
+      isDeleted: { $ne: true },
+    });
+    if (existingFaculty) {
+      throw new AppError_1.AppError(
+        404,
+        'Faculty with this email already exists',
+      );
+    }
+    next();
   });
-
-  if (existingFaculty) {
-    throw new AppError(404, 'Faculty with this email already exists');
-  }
-
-  next();
 });
-
 // generating
 facultySchema.virtual('fullName').get(function () {
   return `${this.name.firstName} ${this.name.middleName} ${this.name.lastName}`;
 });
-
 // filter out the deleted faculty
-
 facultySchema.pre('find', function (next) {
   this.find({ isDeleted: { $ne: true } });
   next();
 });
-
 facultySchema.pre('findOne', function (next) {
   this.findOne({ isDeleted: { $ne: true } });
   next();
 });
-
 facultySchema.pre('aggregate', function (next) {
   this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
   next();
 });
-
 // checking if user is already exist
-facultySchema.statics.isUserExist = async function (id: string) {
-  const existingUser = await Faculty.findOne({ id });
-  return existingUser;
+facultySchema.statics.isUserExist = function (id) {
+  return __awaiter(this, void 0, void 0, function* () {
+    const existingUser = yield exports.Faculty.findOne({ id });
+    return existingUser;
+  });
 };
-
-export const Faculty = model<TFaculty, FacultyModel>('Faculty', facultySchema);
+exports.Faculty = (0, mongoose_1.model)('Faculty', facultySchema);

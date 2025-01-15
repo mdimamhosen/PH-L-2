@@ -48,14 +48,16 @@ export const findLastFacultyId = async () => {
 };
 
 export const genarateFacultyId = async () => {
-  let currentFacultyId = (0).toString();
+  let currentFacultyId = (0).toString().padStart(4, '0');
   const lastFacultyId = await findLastFacultyId();
 
   if (lastFacultyId) {
     currentFacultyId = (Number(lastFacultyId) + 1).toString().padStart(4, '0');
+  } else {
+    currentFacultyId = (Number(currentFacultyId) + 1)
+      .toString()
+      .padStart(4, '0');
   }
   const facultyId = `F-${currentFacultyId}`;
   return facultyId;
 };
-
-genarateFacultyId().then(console.log);

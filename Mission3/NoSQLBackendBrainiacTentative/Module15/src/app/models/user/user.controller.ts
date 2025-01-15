@@ -27,7 +27,10 @@ const createFaculty = catchAsync(async (req, res) => {
   sendResponse(res, data);
 });
 
+const createAdmin = catchAsync(async () => {});
+
 export const UserController = {
   createStudent,
   createFaculty,
+  createAdmin,
 };

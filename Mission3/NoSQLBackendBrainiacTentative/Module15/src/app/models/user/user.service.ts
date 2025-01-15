@@ -9,9 +9,9 @@ import { TStudent } from '../student/student.interface';
 import { Student } from '../student/student.model';
 import { AppError } from '../../utils/AppError';
 import { User } from './user.model';
-import { TFaculty } from '../Faculty/faculty.interface';
+import { TFaculty } from '../faculty/faculty.interface';
 import { AcademicDepartment } from '../academicDepartment/academicDepartment.model';
-import { Faculty } from '../Faculty/faculty.model';
+import { Faculty } from '../faculty/faculty.model';
 
 const createStudentIntoDB = async (password: string, payload: TStudent) => {
   const userData: Partial<TUser> = {};
@@ -76,6 +76,11 @@ const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
     session.startTransaction();
 
     userData.id = await genarateFacultyId();
+
+    const isUserExist = await Faculty.isUserExist(payload.email);
+    if (isUserExist) {
+      throw new AppError(400, 'Faculty with this email already exists');
+    }
 
     const newUser = await User.create([userData], { session });
 

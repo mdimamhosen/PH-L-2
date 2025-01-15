@@ -1,13 +1,14 @@
-export class AppError extends Error {
-  public statusCode: number;
-  constructor(statusCode: number, message: string, stack = '') {
+'use strict';
+Object.defineProperty(exports, '__esModule', { value: true });
+exports.AppError = void 0;
+class AppError extends Error {
+  constructor(statusCode, message, stack = '') {
     super(message);
     this.statusCode = statusCode;
     // console.log({
     //   statusCode,
     //   message,
     // });
-
     if (stack) {
       this.stack = stack;
     } else {
@@ -15,3 +16,4 @@ export class AppError extends Error {
     }
   }
 }
+exports.AppError = AppError;
