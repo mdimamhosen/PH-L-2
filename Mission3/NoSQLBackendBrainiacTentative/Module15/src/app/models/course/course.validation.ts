@@ -10,7 +10,7 @@ const createCourseValidation = z.object({
     prefix: z.string().nonempty(),
     code: z.number().int(),
     credits: z.number().int(),
-    preRequisiteCourses: z.array(preRequisiteCourses),
+    preRequisiteCourses: z.array(preRequisiteCourses).optional(),
   }),
 });
 

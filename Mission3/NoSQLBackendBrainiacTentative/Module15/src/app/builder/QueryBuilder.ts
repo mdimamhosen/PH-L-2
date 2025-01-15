@@ -60,7 +60,7 @@ class QueryBuilder<T> {
   pagination() {
     let page = 1;
     let skip = 0;
-    let limit = 1;
+    let limit = 12;
 
     if (this.query?.limit) {
       limit = parseInt(this.query.limit as string, 10);

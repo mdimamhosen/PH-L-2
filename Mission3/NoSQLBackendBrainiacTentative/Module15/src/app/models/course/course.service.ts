@@ -10,7 +10,7 @@ const createCourse = async (course: TCourse) => {
 
 const getAllCoursesFromDB = async (query: Record<string, unknown>) => {
   const courseQuery = new QueryBuilder(
-    Course.find().populate('preRequisiteCourseSchema.course'),
+    Course.find().populate('preRequisiteCourses.course'),
     query,
   )
     .pagination()
