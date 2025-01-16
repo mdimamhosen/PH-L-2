@@ -6,6 +6,7 @@ import { courseController } from './course.controller';
 const router = express.Router();
 
 router.get('/:id', courseController.getCourseById);
+
 router.patch(
   '/:id',
   DataValidation(CourseValidation.updateCourseValidation),
