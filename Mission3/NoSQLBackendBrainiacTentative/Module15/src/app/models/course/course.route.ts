@@ -12,6 +12,19 @@ router.patch(
   DataValidation(CourseValidation.updateCourseValidation),
   courseController.updateCourse,
 );
+
+router.put(
+  '/:courseId/assign-faculties',
+  DataValidation(CourseValidation.CourseFacultiesValidation),
+  courseController.assignFaculties,
+);
+
+router.delete(
+  '/:courseId/remove-faculties',
+  DataValidation(CourseValidation.CourseFacultiesValidation),
+  courseController.removeFaculties,
+);
+
 router.delete('/:id', courseController.deleteCourse);
 
 router.post(
