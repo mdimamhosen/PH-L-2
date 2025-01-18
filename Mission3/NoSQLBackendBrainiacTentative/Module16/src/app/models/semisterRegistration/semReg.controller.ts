@@ -15,18 +15,47 @@ const createSemesterRegistration = catchAsync(async (req, res) => {
   });
 });
 
-const getAllRegisteredSemester = catchAsync(async (req, res) => {});
+const getAllRegisteredSemester = catchAsync(async (req, res) => {
+  const result = await SemesterRegistrationService.getAllRegistrateredSemesters(
+    req.query,
+  );
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    message: 'All registered semesters',
+    data: result,
+    success: true,
+  });
+});
 
-const getSingleRegisteredSemester = catchAsync(async (req, res) => {});
+const getSingleRegisteredSemester = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result =
+    await SemesterRegistrationService.getSemesterRegistrationById(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    message: 'Single registered semester',
+    data: result,
+    success: true,
+  });
+});
 
-const updateRegisteredSemistered = catchAsync(async (req, res) => {});
-
-const deleteRegisteredSemester = catchAsync(async (req, res) => {});
+const updateRegisteredSemistered = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await SemesterRegistrationService.updateSemesterRegistration(
+    id,
+    req.body,
+  );
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    message: 'Semester Registration Updated Successfully',
+    data: result,
+    success: true,
+  });
+});
 
 export const SemesterRegistrationController = {
   createSemesterRegistration,
   getAllRegisteredSemester,
   getSingleRegisteredSemester,
   updateRegisteredSemistered,
-  deleteRegisteredSemester,
 };
