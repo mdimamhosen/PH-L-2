@@ -85,6 +85,12 @@ const updateSemesterRegistration = async (
       'Semester is already ongoing, can not be updated',
     );
   }
+  if (semester?.status === 'UPCOMING' && payload.status === 'ENDED') {
+    throw new AppError(
+      httpStatus.FORBIDDEN,
+      'Semester is not ongoing, can not be updated',
+    );
+  }
 
   const academicSemester = payload?.academicSemester;
   // check if the academic semester is already registered
@@ -95,6 +101,12 @@ const updateSemesterRegistration = async (
   if (!isAcademicSemesterExist) {
     throw new AppError(httpStatus.NOT_FOUND, 'Academic semester not found');
   }
+
+  const result = await SemesterRegistration.findByIdAndUpdate(id, payload, {
+    new: true,
+  });
+
+  return result;
 };
 export const SemesterRegistrationService = {
   createSemesterRegistration,

@@ -1,0 +1,17 @@
+$folderName = Read-Host "Enter the folder name"
+mkdir $folderName
+cd $folderName
+
+$files = @(
+    "$folderName.interface.ts",
+    "$folderName.validation.ts",
+    "$folderName.model.ts",
+    "$folderName.route.ts",
+    "$folderName.controller.ts",
+    "$folderName.service.ts",
+    "$folderName.constant.ts"
+)
+
+foreach ($file in $files) {
+    New-Item -ItemType File -Name $file
+}
