@@ -1,37 +1,38 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import { TOfferedCourse } from './offeredCourse.interface';
+import { Days } from './offeredCourse.constant';
 
 const offeredCourseSchema = new mongoose.Schema<TOfferedCourse>(
   {
     semesterRegistration: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'SemesterRegistration',
+      type: Schema.Types.ObjectId,
       required: true,
+      ref: 'SemesterRegistration',
     },
     academicSemester: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
+      required: true,
       ref: 'AcademicSemester',
-      //   required: true,
     },
     academicFaculty: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'AcademicFaculty',
+      type: Schema.Types.ObjectId,
       required: true,
+      ref: 'AcademicFaculty',
     },
     academicDepartment: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'AcademicDepartment',
+      type: Schema.Types.ObjectId,
       required: true,
+      ref: 'AcademicDepartment',
     },
     course: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Course',
+      type: Schema.Types.ObjectId,
       required: true,
+      ref: 'Course',
     },
     faculty: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Faculty',
+      type: Schema.Types.ObjectId,
       required: true,
+      ref: 'Faculty',
     },
     maxCapacity: {
       type: Number,
@@ -44,7 +45,7 @@ const offeredCourseSchema = new mongoose.Schema<TOfferedCourse>(
     days: [
       {
         type: String,
-        required: true,
+        enum: Days,
       },
     ],
     startTime: {

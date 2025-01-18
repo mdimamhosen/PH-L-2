@@ -6,6 +6,7 @@ import { Faculty } from '../faculty/faculty.model';
 import { SemesterRegistration } from '../semisterRegistration/semReg.model';
 import { TOfferedCourse } from './offeredCourse.interface';
 import { OfferedCourse } from './offeredCourse.model';
+import { hasTimeConflict } from './offeredCourse.utils';
 
 const createOfferedCourseIntoDB = async (payload: TOfferedCourse) => {
   const {
@@ -57,6 +58,38 @@ const createOfferedCourseIntoDB = async (payload: TOfferedCourse) => {
 
   if (!isDepartmentBelongToFaculty) {
     throw new AppError(400, 'Department does not belong to the faculty');
+  }
+
+  const isSameOfferedCourseExistWithSameSection = await OfferedCourse.findOne({
+    semesterRegistration,
+    section: payload.section,
+    course,
+  });
+
+  if (isSameOfferedCourseExistWithSameSection) {
+    throw new AppError(400, 'Same course with same section already exist');
+  }
+
+  //   get the schedule of the faculties
+  const assignedSchedules = await OfferedCourse.find({
+    semesterRegistration,
+    faculty,
+    days: { $in: payload.days },
+  }).select('days startTime endTime -_id');
+
+  const newPayloadSchedule = {
+    days: payload.days,
+    startTime: payload.startTime,
+    endTime: payload.endTime,
+  };
+
+  const isItHasTimeConflict = hasTimeConflict(
+    assignedSchedules,
+    newPayloadSchedule,
+  );
+
+  if (isItHasTimeConflict) {
+    throw new AppError(400, 'Time conflict with the assigned schedule');
   }
 
   const result = await OfferedCourse.create({ ...payload, academicSemester });

@@ -9,6 +9,7 @@ $files = @(
     "$folderName.route.ts",
     "$folderName.controller.ts",
     "$folderName.service.ts",
+    "$folderName.utils.ts",
     "$folderName.constant.ts"
 )
 

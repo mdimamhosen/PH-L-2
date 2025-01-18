@@ -36,13 +36,29 @@ const createOfferedCourseValidationSchema = z.object({
   ),
 });
 
-const updateOfferedCourseValidationSchema = z.object({
+const updateOfferedCourseSchema = z.object({
   body: z.object({
     faculty: z.string().optional(),
     maxCapacity: z.number().optional(),
+    days: z
+      .array(z.enum(['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri']))
+      .optional(),
     startTime: timeStringSchema.optional(),
     endTime: timeStringSchema.optional(),
   }),
+});
+
+const updateOfferedCourseValidationSchema = z.object({
+  body: updateOfferedCourseSchema.refine(
+    data => {
+      const startTime = new Date(`2021-01-01T${data.body.startTime}`);
+      const endTime = new Date(`2021-01-01T${data.body.endTime}`);
+      return startTime < endTime;
+    },
+    {
+      message: 'startTime should be less than endTime',
+    },
+  ),
 });
 
 export const OfferedCourseValidations = {
