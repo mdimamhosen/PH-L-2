@@ -4,7 +4,7 @@ import { CourseValidation } from './course.validation';
 import { courseController } from './course.controller';
 import auth from '../../middlewares/auth';
 import { USER_ROLE } from '../user/user.const';
-
+// this route is for course
 const router = express.Router();
 
 router.get(
