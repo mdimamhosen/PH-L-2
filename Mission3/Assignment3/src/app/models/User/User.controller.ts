@@ -1,0 +1,21 @@
+import catchAsyncResponse from '../../utils/catchAsyncResponse';
+import sendResponse from '../../utils/sendResponse';
+import { UserServices } from './User.service';
+import httpStatus from 'http-status';
+
+const createAdmin = catchAsyncResponse(async (req, res) => {
+  console.log(req.body);
+
+  const result = await UserServices.createAdmin(req.body);
+  const data = {
+    success: true,
+    statusCode: httpStatus.CREATED,
+    message: 'Admin created successfully',
+    data: result,
+  };
+  sendResponse(res, data);
+});
+
+export const UserController = {
+  createAdmin,
+};

@@ -69,6 +69,7 @@ const globalErrorHandler: ErrorRequestHandler = (
     statusCode,
     message,
     error,
+    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,
   });
 };
 
