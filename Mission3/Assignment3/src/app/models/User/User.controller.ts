@@ -16,6 +16,20 @@ const createAdmin = catchAsyncResponse(async (req, res) => {
   sendResponse(res, data);
 });
 
+const createUser = catchAsyncResponse(async (req, res) => {
+  const result = await UserServices.createUser(req.body);
+
+  const data = {
+    success: true,
+    statusCode: httpStatus.CREATED,
+    message: 'User created successfully',
+    data: result,
+  };
+
+  sendResponse(res, data);
+});
+
 export const UserController = {
   createAdmin,
+  createUser,
 };

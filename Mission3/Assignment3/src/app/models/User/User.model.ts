@@ -71,28 +71,30 @@ UserSchema.post('save', function (doc, next) {
   next();
 });
 
-UserSchema.statics.isUserExist = async function (id: string) {
-  const isUser = await User.findOne({ id }).select('password');
+UserSchema.statics.isUserExist = async function (email: string) {
+  const isUser = await User.findOne({ email }).select('password');
   if (!isUser) return false;
   return true;
 };
-UserSchema.statics.isUserBlocked = async function (id: string) {
-  const isUser = await User.findOne({ id, isBlocked: true }).select('password');
+UserSchema.statics.isUserBlocked = async function (email: string) {
+  const isUser = await User.findOne({ email, isBlocked: true }).select(
+    'password',
+  );
   if (!isUser) return false;
   return true;
 };
 
-UserSchema.statics.isUserDeleted = async function (id: string) {
-  const isUser = await User.findOne({ id, isDeleted: true });
+UserSchema.statics.isUserDeleted = async function (email: string) {
+  const isUser = await User.findOne({ email, isDeleted: true });
   if (!isUser) return false;
   return true;
 };
 
 UserSchema.statics.isPasswordMatched = async function (
   password: string,
-  id: string,
+  email: string,
 ) {
-  const user = await User.findOne({ id }).select('password');
+  const user = await User.findOne({ email }).select('password');
   if (!user) return false;
   const isPass = await bcrypt.compare(password, user.password);
   if (!isPass) return false;

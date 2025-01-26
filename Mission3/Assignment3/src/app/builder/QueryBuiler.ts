@@ -1,7 +1,7 @@
-import { Query } from 'mongoose';
+import { FilterQuery, Query } from 'mongoose';
 
 class QueryBuilder<T> {
-  private QueryModel: Query<T[], T>;
+  public QueryModel: Query<T[], T>;
   private query: Record<string, unknown>;
 
   constructor(QueryModel: Query<T[], T>, query: Record<string, unknown>) {
@@ -57,7 +57,7 @@ class QueryBuilder<T> {
       if (queryObject[el]) delete queryObject[el];
     });
 
-    this.QueryModel = this.QueryModel.find(queryObject);
+    this.QueryModel = this.QueryModel.find(queryObject as FilterQuery<T>);
     return this;
   }
 

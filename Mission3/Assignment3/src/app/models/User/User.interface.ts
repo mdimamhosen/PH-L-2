@@ -15,10 +15,10 @@ export interface IUser {
 export type TRoles = 'admin' | 'user';
 
 export interface UserModel extends Model<IUser> {
-  isUserBlocked(id: string): Promise<boolean>;
-  isUserExist(id: string): Promise<boolean>;
-  isPasswordMatched(id: string, password: string): Promise<boolean>;
-  isUserDeleted(id: string): Promise<boolean>;
+  isUserBlocked(email: string): Promise<boolean>;
+  isUserExist(email: string): Promise<boolean>;
+  isPasswordMatched(email: string, password: string): Promise<boolean>;
+  isUserDeleted(email: string): Promise<boolean>;
   isJwtIssuedBeforePasswordChange(
     passwordChangeTime: Date,
     jwtIssuedTime: number,
