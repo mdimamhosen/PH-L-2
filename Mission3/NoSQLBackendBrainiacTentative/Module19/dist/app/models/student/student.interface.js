@@ -1,5 +1,5 @@
-'use strict';
-Object.defineProperty(exports, '__esModule', { value: true });
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 // for creating instance
 // export interface StudentMethods {
 //   isUserExists(id: string): Promise<TStudent | null>;

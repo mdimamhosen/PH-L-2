@@ -14,4 +14,13 @@ export default {
   nodeEnv: process.env.NODE_ENV,
   bcryptSalt: process.env.BCRYPT_SALT,
   defaultPassword: process.env.DEFAULT_PASSWORD,
+  email: process.env.MAIL_USER,
+  password: process.env.MAIL_PASSWORD,
+  host: process.env.MAIL_HOST,
+  mailport: process.env.MAIL_PORT,
+  secure: process.env.MAIL_SECURE,
+  resetUiUrl: process.env.RESET_UI_URL,
+  cloudName: process.env.CLOUD_NAME,
+  apiKey: process.env.API_KEY,
+  apiSecret: process.env.API_SECRET,
 };

@@ -1,4 +1,8 @@
-'use strict';
-Object.defineProperty(exports, '__esModule', { value: true });
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.studentSearchableFields = void 0;
-exports.studentSearchableFields = ['email', 'name.firstNmae', 'name.lastName'];
+exports.studentSearchableFields = [
+    'email',
+    'name.firstNmae',
+    'name.lastName',
+];

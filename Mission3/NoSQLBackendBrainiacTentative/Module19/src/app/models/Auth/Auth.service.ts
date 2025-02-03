@@ -5,8 +5,9 @@ import { TLoginUser } from './Auth.interface';
 import httpStatus from 'http-status';
 import { JwtPayload } from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import { createToken } from './Auth.utils';
+import { createToken, verifyToken } from './Auth.utils';
 import jwt from 'jsonwebtoken';
+import { sendEmail } from '../../utils/sendEmail';
 
 const loginUser = async (payload: TLoginUser) => {
   console.log('payload', payload);
@@ -101,10 +102,7 @@ const changePassword = async (
 };
 
 const refreshToken = async (refreshToken: string) => {
-  const decoded = jwt.verify(
-    refreshToken,
-    config.jwtRefreshSecret as string,
-  ) as JwtPayload;
+  const decoded = verifyToken(refreshToken, config.jwtRefreshSecret as string);
 
   const id = decoded.id;
   const user = await User.findOne({ id });
@@ -154,8 +152,90 @@ const refreshToken = async (refreshToken: string) => {
   };
 };
 
+const forgotPassword = async (id: string) => {
+  if (!(await User.isUserExist(id))) {
+    throw new AppError(httpStatus.NOT_FOUND, 'User not found');
+  }
+
+  if (await User.isUserDeleted(id)) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'User is deleted');
+  }
+
+  if (await User.isUserBlocked(id)) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'User is blocked');
+  }
+
+  const user = await User.findOne({ id });
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, 'User not found');
+  }
+
+  const jwtPayload = {
+    id: user.id,
+    role: user.role,
+  };
+
+  const resetToken = createToken(jwtPayload, config.jwtSecret as string, '10m');
+
+  const resetLink = `${config.resetUiUrl}?id=${id}&token=${resetToken}`;
+  console.log(resetLink);
+  sendEmail(user.email, 'Reset Password', resetLink);
+
+  // return {
+  //   accessToken,
+  // };
+};
+
+const resetPassword = async (
+  id: string,
+  newPassword: string,
+  token: string,
+) => {
+  if (!(await User.isUserExist(id))) {
+    throw new AppError(httpStatus.NOT_FOUND, 'User not found');
+  }
+
+  if (await User.isUserDeleted(id)) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'User is deleted');
+  }
+
+  if (await User.isUserBlocked(id)) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'User is blocked');
+  }
+
+  const user = await User.findOne({ id });
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, 'User not found');
+  }
+
+  const decoded = jwt.verify(token, config.jwtSecret as string) as JwtPayload;
+
+  if (decoded.id !== id) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'Token is invalid');
+  }
+
+  const newHashedPassword = await bcrypt.hash(newPassword, Number(10));
+  await User.findOneAndUpdate(
+    {
+      id,
+    },
+    {
+      password: newHashedPassword,
+      needsPasswordChange: false,
+      passwordChangedAt: new Date(),
+    },
+    { new: true, upsert: true },
+  );
+
+  sendEmail(user.email, 'Password Changed', 'Password changed successfully');
+
+  return null;
+};
+
 export const AuthServices = {
   loginUser,
   changePassword,
   refreshToken,
+  forgotPassword,
+  resetPassword,
 };

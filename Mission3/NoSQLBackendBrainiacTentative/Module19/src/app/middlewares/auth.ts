@@ -21,16 +21,16 @@ const auth = (...roles: TUserRole[]): RequestHandler => {
     const iat = decoded.iat;
     // check if user exist
     if (!(await User.isUserExist(id))) {
-      throw new AppError(httpStatus.NOT_FOUND, 'User not found');
+      throw new AppError(httpStatus.NOT_FOUND, `${user?.role} not found`);
     }
     // check if user is deleted
     if (await User.isUserDeleted(id)) {
-      throw new AppError(httpStatus.BAD_REQUEST, 'User is deleted');
+      throw new AppError(httpStatus.BAD_REQUEST, `${user?.role} is deleted`);
     }
 
     // check if user is blocked
     if (await User.isUserBlocked(id)) {
-      throw new AppError(httpStatus.BAD_REQUEST, 'User is blocked');
+      throw new AppError(httpStatus.BAD_REQUEST, `${user?.role} is blocked`);
     }
 
     // check if password is changed after the token is issued
@@ -43,12 +43,15 @@ const auth = (...roles: TUserRole[]): RequestHandler => {
     ) {
       throw new AppError(
         httpStatus.BAD_REQUEST,
-        'Password is changed, please login again',
+        `${user.role} password is changed. Please login again`,
       );
     }
     // check if password is correct
     if (roles && !roles.includes(role as TUserRole)) {
-      throw new AppError(403, 'Forbidden access to this route for this role');
+      throw new AppError(
+        403,
+        `You don't have permission to perform this action`,
+      );
     }
     req.user = decoded;
     next();
