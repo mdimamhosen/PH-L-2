@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = __importDefault(require("./app"));
 const config_1 = __importDefault(require("./app/config"));
 const mongoose_1 = __importDefault(require("mongoose"));
+const DB_1 = require("./app/DB");
 const port = process.env.PORT || 3000;
 let isConnected = false;
 let server;
@@ -22,6 +23,7 @@ function main() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const connection = yield mongoose_1.default.connect(config_1.default.mongoUri);
+            yield (0, DB_1.seedSuperAdmin)();
             if (!isConnected) {
                 console.log(`Connected to database ${connection.connection.host}`);
                 isConnected = true;

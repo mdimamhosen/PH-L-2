@@ -33,9 +33,14 @@ file) => __awaiter(void 0, void 0, void 0, function* () {
     userData.role = 'student';
     userData.email = payload.email;
     const AdmissionSemester = yield academicSemester_model_1.AcademicSemesterModel.findById(payload.admissionSemester);
+    const academicDepartment = yield academicDepartment_model_1.AcademicDepartment.findById(payload.academicDepartment);
+    if (!academicDepartment) {
+        throw new AppError_1.AppError(404, 'Academic Department is not exist');
+    }
     if (!AdmissionSemester) {
         throw new AppError_1.AppError(404, 'admissionSemester is null');
     }
+    payload.academicFaculty = academicDepartment === null || academicDepartment === void 0 ? void 0 : academicDepartment.academicFaculty;
     const session = yield mongoose_1.default.startSession();
     try {
         session.startTransaction();
@@ -43,14 +48,16 @@ file) => __awaiter(void 0, void 0, void 0, function* () {
         userData.id = studentId;
         const imagename = `${studentId}-${payload === null || payload === void 0 ? void 0 : payload.name.firstName}-${payload.name.lastName}`;
         // send image to cloudinary
-        const { secure_url } = yield (0, sendEmailToCloudinary_1.uploadImageToCloudinary)(file.path, imagename, 'student');
+        if (file) {
+            const { secure_url } = yield (0, sendEmailToCloudinary_1.uploadImageToCloudinary)(file.path, imagename, 'student');
+            payload.profileImg = secure_url;
+        }
         const newUser = yield user_model_1.User.create([userData], { session });
         if (!newUser.length) {
             throw new AppError_1.AppError(http_status_1.default.BAD_REQUEST, 'User is not created');
         }
         payload.id = newUser[0].id;
         payload.user = newUser[0]._id;
-        payload.profileImg = secure_url;
         const newStudent = yield student_model_1.Student.create([payload], { session });
         if (!newStudent.length) {
             throw new AppError_1.AppError(http_status_1.default.BAD_REQUEST, 'Student is not created');
@@ -75,6 +82,7 @@ const createFacultyIntoDB = (password, payload) => __awaiter(void 0, void 0, voi
     if (!isAcademicDepartmentExist) {
         throw new AppError_1.AppError(404, 'Academic Department is not exist');
     }
+    payload.academicFaculty = isAcademicDepartmentExist.academicFaculty;
     const session = yield mongoose_1.default.startSession();
     try {
         session.startTransaction();

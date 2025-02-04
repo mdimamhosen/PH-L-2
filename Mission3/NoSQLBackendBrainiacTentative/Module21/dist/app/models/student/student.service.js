@@ -48,7 +48,8 @@ const getAllStudentsFromDB = (query) => __awaiter(void 0, void 0, void 0, functi
         .fields();
     //  Here Student.find() is the model query and query is the query object ----> Very Important
     const result = yield studentQueryBuilder.modelQuery;
-    return result;
+    const meta = yield studentQueryBuilder.countTotal();
+    return { result, meta };
 });
 const getSingleStudentFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield student_model_1.Student.findById({ id })

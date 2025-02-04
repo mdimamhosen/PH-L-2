@@ -14,4 +14,5 @@ router.get('/:id', offeredCourse_controller_1.OfferedCourseControllers.getOffere
 router.patch('/:id', offeredCourse_controller_1.OfferedCourseControllers.updateOfferedCourse);
 router.delete('/:id', offeredCourse_controller_1.OfferedCourseControllers.deleteOfferedCourse);
 router.post('/create-offered-course', (0, ValidateUserRequest_1.default)(offeredCourse_validation_1.OfferedCourseValidations.createOfferedCourseValidationSchema), offeredCourse_controller_1.OfferedCourseControllers.createOfferedCourse);
+router.get('/my-offered-courses', offeredCourse_controller_1.OfferedCourseControllers.getMyOfferedCourses);
 exports.oOfferedCourseRoutes = router;

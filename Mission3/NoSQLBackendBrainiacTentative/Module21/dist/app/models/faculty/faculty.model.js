@@ -110,6 +110,11 @@ const facultySchema = new mongoose_1.Schema({
         type: Boolean,
         default: false,
     },
+    academicFaculty: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: 'AcademicFaculty',
+        required: [true, 'Academic Faculty is required'],
+    },
 }, {
     timestamps: true,
     toJSON: { virtuals: true },

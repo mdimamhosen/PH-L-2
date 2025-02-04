@@ -196,6 +196,10 @@ const removeFacultiesFromCourseIntoDB = (courseId, payload) => __awaiter(void 0,
     });
     return result;
 });
+const getFacultiesFromCourse = (courseId) => __awaiter(void 0, void 0, void 0, function* () {
+    const faculties = yield course_model_1.CourseFaculty.findOne({ course: courseId }).populate('faculties');
+    return faculties;
+});
 exports.CourseServices = {
     createCourse,
     getAllCoursesFromDB,
@@ -204,4 +208,5 @@ exports.CourseServices = {
     deleteCourseFromDB,
     assignFacultiesWithCourseIntoDB,
     removeFacultiesFromCourseIntoDB,
+    getFacultiesFromCourse,
 };

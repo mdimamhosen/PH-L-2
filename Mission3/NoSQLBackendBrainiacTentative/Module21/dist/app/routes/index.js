@@ -16,6 +16,7 @@ const course_route_1 = require("../models/course/course.route");
 const semReg_route_1 = require("../models/semisterRegistration/semReg.route");
 const offeredCourse_route_1 = require("../models/offeredCourse/offeredCourse.route");
 const Auth_route_1 = require("../models/Auth/Auth.route");
+const EnrolledCourse_route_1 = require("../models/EnrolledCourse/EnrolledCourse.route");
 const router = express_1.default.Router();
 const moduleRoutes = [
     {
@@ -61,6 +62,10 @@ const moduleRoutes = [
     {
         path: '/auth',
         module: Auth_route_1.AuthRoutes,
+    },
+    {
+        path: '/enrolled-courses',
+        module: EnrolledCourse_route_1.EnrolledCourseRoute,
     },
 ];
 moduleRoutes.forEach(route => {

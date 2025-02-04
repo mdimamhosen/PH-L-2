@@ -15,6 +15,7 @@ const router = express_1.default.Router();
 router.get('/:id', (0, auth_1.default)(user_const_1.USER_ROLE.admin, user_const_1.USER_ROLE.faculty, user_const_1.USER_ROLE.student), course_controller_1.courseController.getCourseById);
 router.patch('/:id', (0, auth_1.default)(user_const_1.USER_ROLE.admin), (0, ValidateUserRequest_1.default)(course_validation_1.CourseValidation.updateCourseValidation), course_controller_1.courseController.updateCourse);
 router.put('/:courseId/assign-faculties', (0, auth_1.default)(user_const_1.USER_ROLE.admin), (0, ValidateUserRequest_1.default)(course_validation_1.CourseValidation.CourseFacultiesValidation), course_controller_1.courseController.assignFaculties);
+router.get('/:courseId/get-faculties', (0, auth_1.default)(user_const_1.USER_ROLE.admin, user_const_1.USER_ROLE.faculty, user_const_1.USER_ROLE.student, user_const_1.USER_ROLE.superAdmin), course_controller_1.courseController.getFaculties);
 router.delete('/:courseId/remove-faculties', (0, auth_1.default)(user_const_1.USER_ROLE.admin), (0, ValidateUserRequest_1.default)(course_validation_1.CourseValidation.CourseFacultiesValidation), course_controller_1.courseController.removeFaculties);
 router.delete('/:id', (0, auth_1.default)(user_const_1.USER_ROLE.admin), course_controller_1.courseController.deleteCourse);
 router.post('/create-course', (0, auth_1.default)(user_const_1.USER_ROLE.admin), (0, ValidateUserRequest_1.default)(course_validation_1.CourseValidation.createCourseValidation), course_controller_1.courseController.createCourse);

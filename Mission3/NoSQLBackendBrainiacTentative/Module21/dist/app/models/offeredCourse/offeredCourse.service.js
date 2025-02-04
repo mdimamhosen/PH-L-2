@@ -20,6 +20,7 @@ const academicFaculty_model_1 = require("../academicFaculty/academicFaculty.mode
 const course_model_1 = __importDefault(require("../course/course.model"));
 const faculty_model_1 = require("../faculty/faculty.model");
 const semReg_model_1 = require("../semisterRegistration/semReg.model");
+const student_model_1 = require("../student/student.model");
 const offeredCourse_model_1 = require("./offeredCourse.model");
 const offeredCourse_utils_1 = require("./offeredCourse.utils");
 const http_status_1 = __importDefault(require("http-status"));
@@ -153,10 +154,62 @@ const updateOfferedCourseIntoDB = (id, payload) => __awaiter(void 0, void 0, voi
     });
     return result;
 });
+const getMyOfferedCoursesFromDB = (facultyId) => __awaiter(void 0, void 0, void 0, function* () {
+    const student = yield student_model_1.Student.findOne({ id: facultyId }).populate('user');
+    if (!student) {
+        throw new AppError_1.AppError(404, 'Student not found');
+    }
+    // get current semester
+    const currentSemester = yield semReg_model_1.SemesterRegistration.findOne({
+        status: 'ONGOING',
+    });
+    if (!currentSemester) {
+        throw new AppError_1.AppError(404, 'There is no ongoing semester');
+    }
+    const result = yield offeredCourse_model_1.OfferedCourse.aggregate([
+        {
+            $match: {
+                semesterRegistration: currentSemester === null || currentSemester === void 0 ? void 0 : currentSemester._id,
+                academicDepartment: student.academicDepartment,
+                academicFaculty: student.academicFaculty,
+            },
+        },
+        {
+            $lookup: {
+                from: 'courses',
+                localField: 'course',
+                foreignField: '_id',
+                as: 'course',
+            },
+        },
+    ]);
+    // {
+    // $unwind: '$course',
+    // },
+    // {
+    //   $lookup:{
+    //     from: 'enrolledcourses',
+    //     pipeline:[
+    //       {
+    //         $match:{
+    //           $expr:{
+    //             $and:[
+    //               { $eq: ['$offeredCourse', '$_id'] },
+    //               { $eq: ['$student', student._id] }
+    //             ]
+    //           }
+    //         }
+    //       }
+    //     ]
+    //   }
+    // }
+    return result;
+});
 exports.OfferedCourseServices = {
     createOfferedCourseIntoDB,
     getAllOfferedCoursesFromDB,
     getSingleOfferedCourseFromDB,
     updateOfferedCourseIntoDB,
     deleteOfferedCourseFromDB,
+    getMyOfferedCoursesFromDB,
 };

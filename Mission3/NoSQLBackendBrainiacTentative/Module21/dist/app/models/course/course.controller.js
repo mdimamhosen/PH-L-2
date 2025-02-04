@@ -94,6 +94,17 @@ const removeFaculties = (0, CatchResponse_1.default)((req, res) => __awaiter(voi
     };
     (0, sendResponse_1.default)(res, data);
 }));
+const getFaculties = (0, CatchResponse_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { courseId } = req.params;
+    const faculties = yield course_service_1.CourseServices.getFacultiesFromCourse(courseId);
+    const data = {
+        statusCode: http_status_1.default.OK,
+        message: 'Faculties fetched successfully',
+        success: true,
+        data: faculties,
+    };
+    (0, sendResponse_1.default)(res, data);
+}));
 exports.courseController = {
     createCourse,
     getAllCourses,
@@ -102,4 +113,5 @@ exports.courseController = {
     deleteCourse,
     assignFaculties,
     removeFaculties,
+    getFaculties,
 };

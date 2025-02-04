@@ -62,10 +62,22 @@ const deleteOfferedCourse = (0, CatchResponse_1.default)((req, res) => __awaiter
         data: result,
     });
 }));
+const getMyOfferedCourses = (0, CatchResponse_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.user.id;
+    const courses = yield offeredCourse_service_1.OfferedCourseServices.getMyOfferedCoursesFromDB(id);
+    const data = {
+        statusCode: http_status_1.default.OK,
+        message: 'Courses fetched successfully',
+        success: true,
+        data: courses,
+    };
+    (0, sendResponse_1.default)(res, data);
+}));
 exports.OfferedCourseControllers = {
     createOfferedCourse,
     getAllOfferedCourses,
     getOfferedCourse,
     updateOfferedCourse,
     deleteOfferedCourse,
+    getMyOfferedCourses,
 };
