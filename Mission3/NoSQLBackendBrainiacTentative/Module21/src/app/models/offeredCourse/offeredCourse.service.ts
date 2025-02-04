@@ -5,6 +5,7 @@ import { AcademicFaculty } from '../academicFaculty/academicFaculty.model';
 import Course from '../course/course.model';
 import { Faculty } from '../faculty/faculty.model';
 import { SemesterRegistration } from '../semisterRegistration/semReg.model';
+import { Student } from '../student/student.model';
 import { TOfferedCourse } from './offeredCourse.interface';
 import { OfferedCourse } from './offeredCourse.model';
 import { hasTimeConflict } from './offeredCourse.utils';
@@ -205,10 +206,66 @@ const updateOfferedCourseIntoDB = async (
   return result;
 };
 
+const getMyOfferedCoursesFromDB = async (facultyId: string) => {
+  const student = await Student.findOne({ id: facultyId }).populate('user');
+  if (!student) {
+    throw new AppError(404, 'Student not found');
+  }
+  // get current semester
+  const currentSemester = await SemesterRegistration.findOne({
+    status: 'ONGOING',
+  });
+
+  if (!currentSemester) {
+    throw new AppError(404, 'There is no ongoing semester');
+  }
+
+  const result = await OfferedCourse.aggregate([
+    {
+      $match: {
+        semesterRegistration: currentSemester?._id,
+        academicDepartment: student.academicDepartment,
+        academicFaculty: student.academicFaculty,
+      },
+    },
+    {
+      $lookup: {
+        from: 'courses',
+        localField: 'course',
+        foreignField: '_id',
+        as: 'course',
+      },
+    },
+  ]);
+  // {
+  // $unwind: '$course',
+  // },
+  // {
+  //   $lookup:{
+  //     from: 'enrolledcourses',
+  //     pipeline:[
+  //       {
+  //         $match:{
+  //           $expr:{
+  //             $and:[
+  //               { $eq: ['$offeredCourse', '$_id'] },
+  //               { $eq: ['$student', student._id] }
+  //             ]
+  //           }
+  //         }
+  //       }
+  //     ]
+  //   }
+  // }
+
+  return result;
+};
+
 export const OfferedCourseServices = {
   createOfferedCourseIntoDB,
   getAllOfferedCoursesFromDB,
   getSingleOfferedCourseFromDB,
   updateOfferedCourseIntoDB,
   deleteOfferedCourseFromDB,
+  getMyOfferedCoursesFromDB,
 };

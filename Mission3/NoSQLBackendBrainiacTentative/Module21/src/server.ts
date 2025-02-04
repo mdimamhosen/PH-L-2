@@ -2,6 +2,7 @@ import { Server } from 'http';
 import app from './app';
 import config from './app/config';
 import mongoose from 'mongoose';
+import { seedSuperAdmin } from './app/DB';
 
 const port = process.env.PORT || 3000;
 
@@ -12,6 +13,7 @@ let server: Server;
 async function main() {
   try {
     const connection = await mongoose.connect(config.mongoUri as string);
+    await seedSuperAdmin();
 
     if (!isConnected) {
       console.log(`Connected to database ${connection.connection.host}`);

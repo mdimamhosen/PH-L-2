@@ -36,9 +36,19 @@ const createStudentIntoDB = async (
     payload.admissionSemester,
   );
 
+  const academicDepartment = await AcademicDepartment.findById(
+    payload.academicDepartment,
+  );
+
+  if (!academicDepartment) {
+    throw new AppError(404, 'Academic Department is not exist');
+  }
+
   if (!AdmissionSemester) {
     throw new AppError(404, 'admissionSemester is null');
   }
+
+  payload.academicFaculty = academicDepartment?.academicFaculty;
 
   const session = await mongoose.startSession();
 
@@ -51,12 +61,15 @@ const createStudentIntoDB = async (
     const imagename = `${studentId}-${payload?.name.firstName}-${payload.name.lastName}`;
 
     // send image to cloudinary
-    const { secure_url } = await uploadImageToCloudinary(
-      file.path,
-      imagename,
-      'student',
-    );
 
+    if (file) {
+      const { secure_url } = await uploadImageToCloudinary(
+        file.path,
+        imagename,
+        'student',
+      );
+      payload.profileImg = secure_url;
+    }
     const newUser = await User.create([userData], { session });
     if (!newUser.length) {
       throw new AppError(httpStatus.BAD_REQUEST, 'User is not created');
@@ -64,7 +77,6 @@ const createStudentIntoDB = async (
 
     payload.id = newUser[0].id;
     payload.user = newUser[0]._id;
-    payload.profileImg = secure_url;
 
     const newStudent = await Student.create([payload], { session });
     if (!newStudent.length) {
@@ -95,6 +107,8 @@ const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
   if (!isAcademicDepartmentExist) {
     throw new AppError(404, 'Academic Department is not exist');
   }
+
+  payload.academicFaculty = isAcademicDepartmentExist.academicFaculty;
 
   const session = await mongoose.startSession();
   try {

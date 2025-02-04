@@ -102,6 +102,11 @@ const facultySchema = new Schema<TFaculty, FacultyModel>(
       type: Boolean,
       default: false,
     },
+    academicFaculty: {
+      type: Schema.Types.ObjectId,
+      ref: 'AcademicFaculty',
+      required: [true, 'Academic Faculty is required'],
+    },
   },
   {
     timestamps: true,

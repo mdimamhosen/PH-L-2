@@ -17,4 +17,6 @@ router.post(
   OfferedCourseControllers.createOfferedCourse,
 );
 
+router.get('/my-offered-courses', OfferedCourseControllers.getMyOfferedCourses);
+
 export const oOfferedCourseRoutes = router;

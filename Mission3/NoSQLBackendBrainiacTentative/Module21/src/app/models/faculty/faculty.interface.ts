@@ -31,6 +31,7 @@ export type TFaculty = {
   profileImg?: string;
   academicDepartment: Types.ObjectId;
   isDeleted: boolean;
+  academicFaculty: Types.ObjectId;
 };
 
 export interface FacultyModel extends Model<TFaculty> {
