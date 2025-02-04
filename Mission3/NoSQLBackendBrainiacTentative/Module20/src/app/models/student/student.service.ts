@@ -29,7 +29,8 @@ const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
   //  Here Student.find() is the model query and query is the query object ----> Very Important
 
   const result = await studentQueryBuilder.modelQuery;
-  return result;
+  const meta = await studentQueryBuilder.countTotal();
+  return { result, meta };
 };
 
 const getSingleStudentFromDB = async (id: string) => {
