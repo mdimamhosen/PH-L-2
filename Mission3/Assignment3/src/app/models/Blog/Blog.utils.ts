@@ -22,5 +22,7 @@ const findLastBlogId = async () => {
     .sort({ createdAt: -1 })
     .lean();
 
+  console.log(await Blog.findOne({}, { id: 1, _id: 0 }));
+
   return lastBlog?.id ? lastBlog.id.substring(2) : undefined;
 };

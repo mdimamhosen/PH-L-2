@@ -40,7 +40,23 @@ const createUser = async (payload: IUser) => {
   return newUser;
 };
 
+const blockUser = async (userId: string) => {
+  const user = await User.findById(userId);
+
+  if (!user) {
+    throw new AppError('User not found', httpStatus.NOT_FOUND);
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+    { isBlocked: true },
+    { new: true },
+  );
+  return updatedUser;
+};
+
 export const UserServices = {
   createAdmin,
   createUser,
+  blockUser,
 };

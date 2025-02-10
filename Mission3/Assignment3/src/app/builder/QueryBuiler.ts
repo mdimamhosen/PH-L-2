@@ -57,7 +57,16 @@ class QueryBuilder<T> {
       if (queryObject[el]) delete queryObject[el];
     });
 
+    console.log(queryObject);
+
+    if (queryObject?.authorId) {
+      queryObject.author = queryObject.authorId;
+      delete queryObject.authorId;
+      console.log(queryObject);
+    }
+
     this.QueryModel = this.QueryModel.find(queryObject as FilterQuery<T>);
+
     return this;
   }
 

@@ -29,7 +29,23 @@ const createUser = catchAsyncResponse(async (req, res) => {
   sendResponse(res, data);
 });
 
+const blockUser = catchAsyncResponse(async (req, res) => {
+  const { userId } = req.params;
+  console.log('userId', userId);
+  await UserServices.blockUser(userId);
+
+  const data = {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'User blocked successfully',
+    // data: {},
+  };
+
+  sendResponse(res, data);
+});
+
 export const UserController = {
   createAdmin,
   createUser,
+  blockUser,
 };

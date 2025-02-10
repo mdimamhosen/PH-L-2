@@ -6,8 +6,6 @@ import { createToken } from './Auth.utils';
 import httpStatus from 'http-status';
 
 const loginUser = async (payload: IUserLogin) => {
-  console.log('payload', payload);
-
   const { email, password } = payload;
 
   if (!(await User.isUserExist(email))) {
@@ -31,7 +29,9 @@ const loginUser = async (payload: IUserLogin) => {
     throw new AppError('User not found', httpStatus.NOT_FOUND);
   }
   // create token and send to the user
+
   const jwtPayload = {
+    _id: user._id,
     id: user.id,
     role: user.role,
     email: user.email,
@@ -43,15 +43,15 @@ const loginUser = async (payload: IUserLogin) => {
     configurations.jwtExpiration as string,
   );
 
-  const refreshToken = createToken(
+  createToken(
     jwtPayload,
     configurations.jwtRefreshSecret as string,
     configurations.jwtRefreshExpiration as string,
   );
 
   return {
-    accessToken,
-    refreshToken,
+    token: accessToken,
+    // refreshToken,
   };
 };
 

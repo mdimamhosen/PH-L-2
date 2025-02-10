@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import logger from "../middlewares/logger";
+
+import taskReducer from "../features/task/taskSlice";
 
 export const reduxStore = configureStore({
-  reducer: {},
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+  reducer: {
+    todos: taskReducer,
+  },
 });
 
 export type RootState = ReturnType<typeof reduxStore.getState>;

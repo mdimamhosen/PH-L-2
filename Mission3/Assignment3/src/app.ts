@@ -9,8 +9,27 @@ const app: Application = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ origin: 'http://localhost:5000', credentials: true }));
+app.use(
+  cors({
+    origin: '*',
+    credentials: true,
+  }),
+);
+
 app.use(cookieParser());
+
+app.use((req: Request, res: Response, next) => {
+  console.log(`${req.method} ${req.path}`);
+  next();
+});
+
+app.get('/', (req: Request, res: Response) => {
+  res.send('Home route...');
+});
+
+app.get('/api', (req: Request, res: Response) => {
+  res.send('API route...');
+});
 
 app.use('/api', routes);
 
@@ -18,9 +37,5 @@ app.use('/api', routes);
 app.use(globalErrorHandler);
 
 app.use(notFound);
-
-app.get('/', (req: Request, res: Response) => {
-  res.send('Home route...');
-});
 
 export default app;
