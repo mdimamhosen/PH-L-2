@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "name": "phu",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "cd client && npm run dev",
+    "server": "cd server && npm run start:dev",
+    "dev": "concurrently --prefix \"[{name}] 🚀\" -n \"Client,Server\" -c \"cyan.bold,green.bold\" \"npm run client\" \"npm run server\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
