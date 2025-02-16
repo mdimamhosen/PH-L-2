@@ -1,9 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { RooState } from "../../store/store";
 
 type TAuthState = {
-  user: null | object;
+  user: null | IUSer;
   token: null | string;
 };
+
+export interface IUSer {
+  id: string;
+  role: string;
+  iat: number;
+  exp: number;
+}
 
 const initialState: TAuthState = {
   user: null,
@@ -25,5 +33,9 @@ const authSlice = createSlice({
   },
 });
 
-export const { setUser } = authSlice.actions;
+export const { setUser, logOut } = authSlice.actions;
+
 export default authSlice.reducer;
+
+export const useCurrentToken = (state: RooState) => state.auth.token;
+export const selectCurrentUser = (state: RooState) => state.auth.user;

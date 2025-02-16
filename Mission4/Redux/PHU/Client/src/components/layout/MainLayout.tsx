@@ -12,7 +12,7 @@ const MainLayout: React.FC = () => {
     <Layout style={{ height: "100vh" }}>
       <Sidebar />
       <Layout>
-        <Header style={{ padding: 0 }} />
+        <Header style={{ padding: 0 }}></Header>
         <Content style={{ margin: "24px 16px 0" }}>
           <div
             style={{

@@ -1,13 +1,21 @@
-import { Menu } from "antd";
+import { Button, Menu } from "antd";
 import { adminPaths } from "../../routes/admin.routes";
 import { sidebarItemsGenarator } from "../../utlis/sidebarItemsGenarator";
 import Sider from "antd/es/layout/Sider";
 import { studentPaths } from "../../routes/student.routes";
 import { facultyPaths } from "../../routes/faculty.routes";
 import { userRole } from "../../utlis/USER_ROLE";
+import { useAppDispathch, useAppSelector } from "../../redux/hooks/hook";
+import { logOut, selectCurrentUser } from "../../redux/feature/auth/authSlice";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 export default function Sidebar() {
-  const role = userRole.FACULTY;
+  const dispatch = useAppDispathch();
+
+  const user = useAppSelector(selectCurrentUser);
+
+  const role = user?.role;
   let sidebarItems;
 
   switch (role) {
@@ -23,6 +31,15 @@ export default function Sidebar() {
     default:
       break;
   }
+
+  const navigate = useNavigate();
+
+  const handleLogOut = () => {
+    const toastId = toast.loading("Logging out...");
+    dispatch(logOut());
+    toast.success("Logout Success", { id: toastId });
+    navigate("/login");
+  };
 
   return (
     <>
@@ -47,6 +64,18 @@ export default function Sidebar() {
           }}
         >
           <h1>PH University</h1>
+          <Button
+            style={{
+              position: "absolute",
+              bottom: "1rem",
+
+              padding: "1rem",
+            }}
+            onClick={handleLogOut}
+            type="dashed"
+          >
+            Logout
+          </Button>
         </div>
         <Menu
           theme="dark"
