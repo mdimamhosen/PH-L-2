@@ -6,8 +6,8 @@ import { IUSer, setUser } from "../redux/feature/auth/authSlice";
 import { verifyToken } from "../utlis/verifyToken";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import PHForm from "../components/from/PHForm";
-import PHFormInput from "../components/from/PHFormInput";
+import PHForm from "../components/Form/PHForm";
+import PHFormInput from "../components/Form/PHFormInput";
 import { FieldValues } from "react-hook-form";
 
 const Login = () => {

@@ -1,18 +1,5 @@
-import { ReactNode } from "react";
 import { NavLink } from "react-router-dom";
-
-export type TSideBarItem = {
-  key: string;
-  label: ReactNode;
-  children?: TSideBarItem[];
-};
-
-export interface IUserPath {
-  name: string;
-  path?: string;
-  element?: ReactNode;
-  children?: IUserPath[];
-}
+import { IUserPath, TSideBarItem } from "../types";
 
 export const sidebarItemsGenarator = (items: IUserPath[], role: string) => {
   const sidebarItems = items.reduce((acc: TSideBarItem[], item) => {
