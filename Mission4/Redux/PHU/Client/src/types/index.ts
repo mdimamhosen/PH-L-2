@@ -65,3 +65,14 @@ export type TQueryParams = {
   name?: string;
   value?: boolean | React.Key | string;
 };
+
+export type TResponseCreateSemester = TResponse<{
+  message: string;
+  data: {
+    _id: string;
+    name: string;
+    year: string;
+    startMonth: string;
+    endMonth: string;
+  };
+}>;

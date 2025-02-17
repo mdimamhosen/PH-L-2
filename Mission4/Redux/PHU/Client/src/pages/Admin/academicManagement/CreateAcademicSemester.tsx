@@ -2,18 +2,18 @@ import { FieldValues, SubmitHandler } from "react-hook-form";
 
 import { Button, Col, Flex } from "antd";
 
-import PHForm from "../../components/Form/PHForm";
-import PHFormSelect from "../../components/Form/PHFormSelect";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { toast } from "sonner";
+import { useCreateAcademicSemesterMutation } from "../../../redux/feature/academicSemister/academicSemesterAPI";
 import {
   AcademicSemesterNameOptions,
   AcademicSemesterStartMonthOptions,
-} from "../../Data/Data.AcademicSemester";
-import { zodResolver } from "@hookform/resolvers/zod";
-
-import { academicSemesterSchema } from "../../Schema/AcademicManagement.Schema";
-import { useCreateAcademicSemesterMutation } from "../../redux/feature/academicSemister/academicSemesterAPI";
-import { toast } from "sonner";
-import { TResponse } from "../../types";
+} from "../../../Data/Data.AcademicSemester";
+import { academicSemesterSchema } from "../../../Schema/AcademicManagement.Schema";
+import PHFormSelect from "../../../components/Form/PHFormSelect";
+import PHForm from "../../../components/Form/PHForm";
+import { TResponseCreateSemester } from "../../../types";
 
 const currentYear = new Date().getFullYear();
 export const YearOptions = [0, 1, 2, 3, 4].map((year) => ({
@@ -21,20 +21,12 @@ export const YearOptions = [0, 1, 2, 3, 4].map((year) => ({
   label: String(currentYear + year),
 }));
 
-type TSemesterData = {
-  name: string;
-  code: string;
-  year: string;
-  startMonth: string;
-  endMonth: string;
-};
-
 const CreateAcademicSemester = () => {
   const [addAcadmiceSemester] = useCreateAcademicSemesterMutation();
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const name = AcademicSemesterNameOptions[parseInt(data?.name) - 1]?.label;
 
-    const semesterdata: TSemesterData = {
+    const semesterdata = {
       name: name,
       code: data.name,
       year: data.year,
@@ -43,7 +35,9 @@ const CreateAcademicSemester = () => {
     };
     const toastId = toast.loading("Creating academic semester...");
     try {
-      const response = (await addAcadmiceSemester(semesterdata)) as TResponse;
+      const response = (await addAcadmiceSemester(
+        semesterdata
+      )) as TResponseCreateSemester;
       console.log(response);
       if (response.error) {
         toast.error(response.error?.message || response.error?.data.message, {

@@ -1,8 +1,9 @@
 import { Table, TableColumnsType, TableProps } from "antd";
-import { useGetALlAcademicSemesterQuery } from "../../redux/feature/academicSemister/academicSemesterAPI";
-import { IAcademicSemesterData } from "../../types/AcademicSemester.type";
+
 import { useState } from "react";
-import { TQueryParams } from "../../types";
+import { TQueryParams } from "../../../types";
+import { IAcademicSemesterData } from "../../../types/AcademicSemester.type";
+import { useGetALlAcademicSemesterQuery } from "../../../redux/feature/academicSemister/academicSemesterAPI";
 
 export type TTableDataAcademicSemester = Pick<
   IAcademicSemesterData,
