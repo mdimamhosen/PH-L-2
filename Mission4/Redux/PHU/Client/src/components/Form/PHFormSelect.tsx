@@ -4,10 +4,11 @@ import { Controller } from "react-hook-form";
 export type TFormSelectProps = {
   label: string;
   name: string;
-  options: { value: string; label: string; disabled?: boolean }[];
+  options: { value: string; label: string; disabled?: boolean }[] | undefined;
+  disabled?: boolean;
 };
 
-const PHFormSelect = ({ label, name, options }: TFormSelectProps) => (
+const PHFormSelect = ({ label, name, options, disabled }: TFormSelectProps) => (
   <>
     <Controller
       name={name}
@@ -17,8 +18,9 @@ const PHFormSelect = ({ label, name, options }: TFormSelectProps) => (
             placeholder="Select a option and change input text above"
             {...field}
             size="large"
+            disabled={disabled}
             options={options}
-          ></Select>
+          />
 
           {error && <div style={{ color: "red" }}>{error.message}</div>}
         </Form.Item>

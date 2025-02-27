@@ -11,7 +11,7 @@ const PHFormInput = ({
   label?: string;
 }) => {
   return (
-    <div style={{ marginBottom: "1rem" }}>
+    <div>
       <Controller
         name={name}
         render={({ field }) => (

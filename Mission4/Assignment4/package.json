@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "antd": "^4.24.16",
+    "concurrently": "^9.1.2",
+    "jwt-decode": "^4.0.0",
+    "shurjopay": "^0.12.1"
+  },
+  "name": "assignment4",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "cd client && npm run dev",
+    "server": "cd server && npm run start:dev",
+    "dev": "concurrently --prefix \"[{name}] 🚀\" -n \"Client,Server\" -c \"cyan.bold,green.bold\" \"npm run client\" \"npm run server\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/antd": "^0.12.32",
+    "@types/jwt-decode": "^2.2.1"
+  }
+}
