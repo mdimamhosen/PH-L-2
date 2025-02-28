@@ -11,40 +11,40 @@ import {
 } from "../../../redux/feature/academicSemister/academicSemesterAPI";
 import { useAddStudentMutation } from "../../../redux/feature/userManagement/userManagement.api";
 
-export const studentDummyData = {
-  password: "student123",
-  student: {
-    name: {
-      firstName: "I am ",
-      middleName: "Student",
-      lastName: "Number 1",
-    },
-    gender: "male",
-    dateOfBirth: "1990-01-01",
-    email: "student2@gmail.com",
-    contactNo: "1235678",
-    emergencyContactNo: "987-654-3210",
-    bloogGroup: "A+",
-    presentAddress: "123 Main St, Cityville",
-    permanentAddress: "456 Oak St, Townsville",
-    guardian: {
-      fatherName: "James Doe",
-      fatherOccupation: "Engineer",
-      fatherContactNo: "111-222-3333",
-      motherName: "Mary Doe",
-      motherOccupation: "Teacher",
-      motherContactNo: "444-555-6666",
-    },
-    localGuardian: {
-      name: "Alice Johnson",
-      occupation: "Doctor",
-      contactNo: "777-888-9999",
-      address: "789 Pine St, Villageton",
-    },
-    admissionSemester: "65b0104110b74fcbd7a25d92",
-    academicDepartment: "65b00fb010b74fcbd7a25d8e",
-  },
-};
+// export const studentDummyData = {
+//   password: "student123",
+//   student: {
+//     name: {
+//       firstName: "I am ",
+//       middleName: "Student",
+//       lastName: "Number 1",
+//     },
+//     gender: "male",
+//     dateOfBirth: "1990-01-01",
+//     email: "student2@gmail.com",
+//     contactNo: "1235678",
+//     emergencyContactNo: "987-654-3210",
+//     bloogGroup: "A+",
+//     presentAddress: "123 Main St, Cityville",
+//     permanentAddress: "456 Oak St, Townsville",
+//     guardian: {
+//       fatherName: "James Doe",
+//       fatherOccupation: "Engineer",
+//       fatherContactNo: "111-222-3333",
+//       motherName: "Mary Doe",
+//       motherOccupation: "Teacher",
+//       motherContactNo: "444-555-6666",
+//     },
+//     localGuardian: {
+//       name: "Alice Johnson",
+//       occupation: "Doctor",
+//       contactNo: "777-888-9999",
+//       address: "789 Pine St, Villageton",
+//     },
+//     admissionSemester: "65b0104110b74fcbd7a25d92",
+//     academicDepartment: "65b00fb010b74fcbd7a25d8e",
+//   },
+// };
 
 const CreateStudent = () => {
   const { data: semesesterData, isLoading: semesterLoading } =
@@ -66,48 +66,68 @@ const CreateStudent = () => {
     label: department.name,
   }));
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    console.log("data =>", data);
+
+    // Destructure image from data
+    const { image, ...studentWithoutImage } = data;
+
+    // Create the student data without the image
     const studentData = {
       password: "student123",
-      student: data,
+      student: studentWithoutImage,
     };
-    console.log("data =>", data);
-    const formData = new FormData();
-    // ! This is just to check if the data is being sent to the server
 
+    // Create FormData instance
+    const formData = new FormData();
+
+    // Append JSON data (stringified)
     formData.append("data", JSON.stringify(studentData));
-    formData.append("file", data.image);
+
+    // Append image file only if it exists
+    if (image) {
+      formData.append("file", image);
+    }
+
+    // Debug: Print FormData to see what is being sent
+    formData.forEach((value, key) => {
+      console.log(`key => ${key}`, "value =>", value);
+    });
+
+    console.log("formData =>", formData);
+
+    // Call API to submit data (Uncomment this line when API is ready)
     addStudent(formData);
   };
 
-  const studentDefultValues = {
-    name: {
-      firstName: "I am ",
-      middleName: "Student",
-      lastName: "Number 1",
-    },
-    gender: "male",
-    // dateOfBirth: "1990-01-01",
-    email: "student222@gmail.com",
-    contactNo: "1235678",
-    emergencyContactNo: "987-654-3210",
-    bloogGroup: "A+",
-    presentAddress: "123 Main St, Cityville",
-    permanentAddress: "456 Oak St, Townsville",
-    guardian: {
-      fatherName: "James Doe",
-      fatherOccupation: "Engineer",
-      fatherContactNo: "111-222-3333",
-      motherName: "Mary Doe",
-      motherOccupation: "Teacher",
-      motherContactNo: "444-555-6666",
-    },
-    localGuardian: {
-      name: "Alice Johnson",
-      occupation: "Doctor",
-      contactNo: "777-888-9999",
-      address: "789 Pine St, Villageton",
-    },
-  };
+  // const studentDefultValues = {
+  //   name: {
+  //     firstName: "I am ",
+  //     middleName: "Student",
+  //     lastName: "Number 1",
+  //   },
+  //   gender: "male",
+  //   // dateOfBirth: "1990-01-01",
+  //   email: "student222@gmail.com",
+  //   contactNo: "1235678",
+  //   emergencyContactNo: "987-654-3210",
+  //   bloogGroup: "A+",
+  //   presentAddress: "123 Main St, Cityville",
+  //   permanentAddress: "456 Oak St, Townsville",
+  //   guardian: {
+  //     fatherName: "James Doe",
+  //     fatherOccupation: "Engineer",
+  //     fatherContactNo: "111-222-3333",
+  //     motherName: "Mary Doe",
+  //     motherOccupation: "Teacher",
+  //     motherContactNo: "444-555-6666",
+  //   },
+  //   localGuardian: {
+  //     name: "Alice Johnson",
+  //     occupation: "Doctor",
+  //     contactNo: "777-888-9999",
+  //     address: "789 Pine St, Villageton",
+  //   },
+  // };
 
   return (
     <Row>

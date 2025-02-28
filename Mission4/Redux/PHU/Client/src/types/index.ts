@@ -1,11 +1,13 @@
 import { BaseQueryApi } from "@reduxjs/toolkit/query";
 import { ReactNode } from "react";
 
-export type TSideBarItem = {
-  key: string;
-  label: ReactNode;
-  children?: TSideBarItem[];
-};
+export type TSideBarItem =
+  | {
+      key: string;
+      label: ReactNode;
+      children?: TSideBarItem[];
+    }
+  | undefined;
 
 export interface IUserPath {
   name: string;
@@ -62,8 +64,8 @@ export type TMeta = {
 export type TResponseRedux<T> = TResponse<T> & BaseQueryApi;
 
 export type TQueryParams = {
-  name?: string;
-  value?: boolean | React.Key | string;
+  name: string;
+  value: boolean | React.Key | string;
 };
 
 export type TResponseCreateSemester = TResponse<{
