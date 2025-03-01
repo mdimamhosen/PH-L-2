@@ -46,3 +46,9 @@ export const bloodGroupOptions = bloodGroups.map((item) => ({
   value: item,
   label: item,
 }));
+
+export const semesterStatusOptions = [
+  { value: "UPCOMING", label: "Upcoming" },
+  { value: "ONGOING", label: "Ongoing" },
+  { value: "ENDED", label: "Ended" },
+];

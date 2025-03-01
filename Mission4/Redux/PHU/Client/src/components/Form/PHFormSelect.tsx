@@ -6,15 +6,23 @@ export type TFormSelectProps = {
   name: string;
   options: { value: string; label: string; disabled?: boolean }[] | undefined;
   disabled?: boolean;
+  mode?: "multiple" | undefined;
 };
 
-const PHFormSelect = ({ label, name, options, disabled }: TFormSelectProps) => (
+const PHFormSelect = ({
+  label,
+  name,
+  options,
+  disabled,
+  mode,
+}: TFormSelectProps) => (
   <>
     <Controller
       name={name}
       render={({ field, fieldState: { error } }) => (
         <Form.Item label={label} name={name}>
           <Select
+            mode={mode}
             placeholder="Select a option and change input text above"
             {...field}
             size="large"

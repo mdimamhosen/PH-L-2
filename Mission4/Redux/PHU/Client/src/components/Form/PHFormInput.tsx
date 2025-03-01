@@ -5,10 +5,12 @@ const PHFormInput = ({
   type,
   name,
   label,
+  disable,
 }: {
   type: string;
   name: string;
   label?: string;
+  disable?: boolean;
 }) => {
   return (
     <div>
@@ -16,7 +18,12 @@ const PHFormInput = ({
         name={name}
         render={({ field }) => (
           <Form.Item label={label}>
-            <Input {...field} type={type} placeholder={label} />
+            <Input
+              {...field}
+              type={type}
+              placeholder={label}
+              disabled={disable}
+            />
           </Form.Item>
         )}
       />
