@@ -145,6 +145,64 @@ Clears the terminal screen.
 
 Quits the PostgreSQL shell.
 
----
+## User and Role Management
+
+### 17. Creating a New User
+
+```sh
+CREATE USER user3;
+```
+
+Creates a new user `user3`.
+
+### 18. Assigning a Role to a User
+
+```sh
+GRANT role1 TO user3;
+```
+
+Assigns the role `role1` to `user3`.
+
+### 19. Creating a User with a Password
+
+```sh
+CREATE USER user4 WITH LOGIN ENCRYPTED PASSWORD '111111';
+```
+
+Creates a user `user4` with login access and an encrypted password.
+
+### 20. Assigning a Role to a User with Login
+
+```sh
+GRANT role1 TO user4;
+```
+
+Grants `role1` to `user4`, allowing them to inherit its privileges.
+
+### 21. Granting Privileges on Tables
+
+```sh
+GRANT ALL PRIVILEGES ON TABLE testTable TO user2;
+```
+
+Grants all privileges on `testTable` to `user2`.
+
+```sh
+GRANT SELECT ON TABLE testTable TO user2;
+```
+
+Grants only `SELECT` permission on `testTable` to `user2`.
+
+```sh
+REVOKE SELECT ON TABLE testTable FROM noobuser;
+```
+
+Revokes `SELECT` permission from `noobuser`.
+
+```sh
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO role1;
+```
+
+Grants `SELECT` permission on all tables in the `public` schema to `role1`.
 
 ### 🚀 **Now you're ready to navigate and manage PostgreSQL using psql!**
