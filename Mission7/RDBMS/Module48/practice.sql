@@ -363,3 +363,8 @@ SELECT * FROM student WHERE age < ANY (SELECT age FROM student WHERE grade = 'A'
 -- SELECT * FROM student LIMIT 10 OFFSET 5*3; -- Page 4 (rows 30-39) total 5 pages
 -- SELECT * FROM student LIMIT 10 OFFSET 5*4; -- Page 5 (rows 40-49) total 5 pages
 -- SELECT * FROM student LIMIT 10 OFFSET 5*5; -- Page 6 (rows 50-59) total 5 pages
+
+
+-- ! UPDATE command
+-- UPDATE student SET age = 21 WHERE first_name = 'John' AND last_name = 'Doe';
+-- UPDATE student SET age = age + 1 , email = "email@gmail.com" WHERE dob < '2000-01-01';
