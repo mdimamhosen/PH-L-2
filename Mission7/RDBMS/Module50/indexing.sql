@@ -45,3 +45,23 @@ SELECT COUNT(*) FROM allemployee;
 
 EXPLAIN ANALYSE SELECT * FROM allemployee;
 EXPLAIN ANALYSE SELECT first_name FROM allemployee WHERE first_name = 'John';
+
+CREATE INDEX idx_allemployee_first_name ON allemployee (first_name);
+
+
+
+-- SHOW data_directory;
+-- SHOW max_connections;
+-- SHOW shared_buffers;
+-- SHOW work_mem;
+-- SHOW maintenance_work_mem;
+-- SHOW effective_cache_size;
+-- SHOW default_statistics_target;
+
+
+CREATE INDEX idx_allemployee_compound ON allemployee (first_name, last_name);
+
+SELECT * FROM
+
+DROP INDEX IF EXISTS idx_allemployee_first_name;
+
