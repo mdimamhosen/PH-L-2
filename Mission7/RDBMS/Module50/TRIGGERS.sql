@@ -24,3 +24,47 @@
     [FOR EACH ROW | FOR EACH STATEMENT]
     EXECUTE PROCEDURE function_name();
 */
+
+CREATE TABLE IF NOT EXISTS users (
+    user_id SERIAL PRIMARY KEY,
+    username VARCHAR(50) ,
+    email VARCHAR(100) ,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+INSERT INTO users VALUES(4,'Joh','jhondoe@gmail.com') , (2,'John Doe','jhondoe@gmail.com') , (3,'Jhon Snow','jhondoe@gmail.com') ;
+
+CREATE TABLE IF NOT EXISTS user_logs (
+    log_id SERIAL PRIMARY KEY,
+    deleted_user_id INT,
+    deleted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+SELECT * FROM users;
+SELECT * FROM user_logs;
+
+CREATE OR REPLACE FUNCTION log_user_deletion_function()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS
+$$ 
+    BEGIN
+    INSERT INTO user_logs (deleted_user_id, deleted_at) 
+    VALUES (OLD.user_id, CURRENT_TIMESTAMP);
+    RAISE NOTICE 'User with ID % has been deleted at %', OLD.user_id, CURRENT_TIMESTAMP;
+    RETURN OLD;
+    END;
+$$
+
+CREATE OR REPLACE TRIGGER log_user_deletion 
+AFTER DELETE
+ON users
+FOR EACH ROW
+EXECUTE FUNCTION log_user_deletion_function();
+
+DELETE FROM users WHERE user_id = 2;
+DELETE FROM users WHERE user_id = 3;
+
+SELECT * FROM users;
+SELECT * FROM user_logs;
