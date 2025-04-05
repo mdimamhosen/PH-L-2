@@ -1,3 +1,4 @@
+-- Active: 1699467625194@@127.0.0.1@5432@ph@public
 CREATE TABLE employees (
     employee_id SERIAL PRIMARY KEY,
     employee_name VARCHAR(50),
@@ -59,6 +60,7 @@ INSERT INTO departments (department_name) VALUES
     ('Mia Roberts', 10, 70000.25, '2021-11-20');
 
 
+
 SELECT * from employees
 JOIN departments ON employees.department_id = departments.department_id;
 
@@ -70,6 +72,11 @@ JOIN departments USING(department_id)
 GROUP BY department_name;
 
 
+SELECT department_name, count(employee_id) FROM employees
+JOIN departments USING(department_id)
+GROUP BY department_name;
+
+
 SELECT department_name, round(avg(salary)) as avg_salary FROM employees
 JOIN departments USING(department_id)
 GROUP BY department_name
@@ -77,13 +84,13 @@ ORDER BY avg_salary desc
 LIMIT 1
 ;
 
-SELECT * FROM employees;
+SELECT extract(YEAR from hire_date) as hire_year, count(*) from employees
+GROUP BY hire_year;
 
 
-SELECT extract(year from hire_date) as year, count(*) as count FROM employees
-GROUP BY year;
 
 
+  
 
 CREATE TABLE orders (
     order_id SERIAL PRIMARY KEY,
@@ -107,9 +114,11 @@ INSERT INTO orders (customer_id, order_date, total_amount) VALUES
 
 DROP Table orders;
 
+    -- Find customers who have placed more than 2 orders and calculate the total amount spent by each of these customers.
 
-SELECT extract(month from order_date) as months , sum(total_amount) as totalAmount FROM orders WHERE extract(year from order_date) = 2022
-GROUP BY months
-ORDER BY months;
 
-SELECT * FROM orders;
+
+    SELECT customer_id, count(order_id), sum(total_amount) as total_spent from orders GROUP BY customer_id HAVING count(order_id) > 2;
+
+    -- Find the total amount of orders placed each month in the year 2022.
+    SELECT extract(month from order_date) as month, sum(total_amount)  from orders WHERE extract(year from order_date) = 2022 GROUP BY month;
