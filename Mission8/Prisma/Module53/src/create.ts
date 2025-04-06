@@ -4,13 +4,13 @@ const prisma = new PrismaClient();
 
 const main = async () => {
   //! Single create
-  //   const result = await prisma.post.create({
-  //     data: {
-  //       title: " My first post",
-  //       content: " This is my first post",
-  //       authorName: "Alice",
-  //     },
-  //   });
+  const result = await prisma.post.create({
+    data: {
+      title: "  ",
+      content: "  ",
+      authorName: " ",
+    },
+  });
   //  ! Multiple create
   //   const result = await prisma.post.createMany({
   //     data: [
