@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  title     String   @db.VarChar(255)
+  content   String   @db.Text
+  authonId  Int
+  published Boolean  @default(false)
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @updatedAt @db.Timestamp(6)
+
+  author       User           @relation(fields: [authonId], references: [id])
+  PostCategory PostCategory[]
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique @db.VarChar(255)
+  email     String   @unique @db.VarChar(255)
+  role      UserRole @default(user)
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @updatedAt @db.Timestamp(6)
+  profile   Profile?
+  Post      Post[]
+
+  @@map("users")
+}
+
+enum UserRole {
+  user
+  admin
+}
+
+model Profile {
+  id     Int     @id @default(autoincrement())
+  bio    String? @db.VarChar(255)
+  userId Int     @unique
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("profiles")
+}
+
+model Category {
+  id           Int            @id @default(autoincrement())
+  name         String         @db.VarChar(255)
+  PostCategory PostCategory[]
+
+  @@map("categories")
+}
+
+// ! For Many-to-Many relation we need to create a join table
+
+model PostCategory {
+  postId     Int
+  categoryId Int
+  Post       Post     @relation(fields: [postId], references: [id])
+  Category   Category @relation(fields: [categoryId], references: [id])
+
+  @@id([postId, categoryId])
+  @@map("post_category")
+}
