@@ -24,6 +24,7 @@ model User {
   id        Int      @id @default(autoincrement())
   username  String   @unique @db.VarChar(255)
   email     String   @unique @db.VarChar(255)
+  age       Int
   role      UserRole @default(user)
   createdAt DateTime @default(now()) @db.Timestamp(6)
   updatedAt DateTime @updatedAt @db.Timestamp(6)
