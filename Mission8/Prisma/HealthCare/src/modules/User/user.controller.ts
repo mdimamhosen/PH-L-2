@@ -1,10 +1,17 @@
 import { Request, Response } from 'express';
 import { UserService } from './user.service';
+import catchAsyncResponse from '../../utils/catchAsyncResponse';
+import sendResponse from '../../utils/sendResponse';
 
-const createAdmin = async (req: Request, res: Response) => {
+const createAdmin = catchAsyncResponse(async (req: Request, res: Response) => {
   const result = await UserService.createAdmin(req.body);
-  res.send(result);
-};
+  sendResponse(res, {
+    statusCode: 201,
+    success: true,
+    message: 'Admin created successfully',
+    data: result,
+  });
+});
 
 export const UserController = {
   createAdmin,
