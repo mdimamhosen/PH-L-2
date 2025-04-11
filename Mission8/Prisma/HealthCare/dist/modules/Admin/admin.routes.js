@@ -8,4 +8,7 @@ const express_1 = __importDefault(require("express"));
 const admin_controller_1 = require("./admin.controller");
 const router = express_1.default.Router();
 router.get('/', admin_controller_1.AdminController.getAllAdmins);
+router.get('/:id', admin_controller_1.AdminController.getAdminById);
+router.patch('/:id', admin_controller_1.AdminController.updateAdminById);
+router.delete('/:id', admin_controller_1.AdminController.deleteAdminById);
 exports.AdminRouter = router;

@@ -26,9 +26,43 @@ const getAllAdmins = (0, catchAsyncResponse_1.default)((req, res) => __awaiter(v
         statusCode: 200,
         success: true,
         message: 'Admins fetched successfully',
+        meta: result.meta,
+        data: result.data,
+    });
+}));
+const getAdminById = (0, catchAsyncResponse_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const result = yield admin_service_1.AdminService.getAdminById(id);
+    (0, sendResponse_1.default)(res, {
+        statusCode: 200,
+        success: true,
+        message: 'Admin fetched successfully',
+        data: result,
+    });
+}));
+const updateAdminById = (0, catchAsyncResponse_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const result = yield admin_service_1.AdminService.updateAdminById(id, req.body);
+    (0, sendResponse_1.default)(res, {
+        statusCode: 200,
+        success: true,
+        message: 'Admin updated successfully',
+        data: result,
+    });
+}));
+const deleteAdminById = (0, catchAsyncResponse_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const result = yield admin_service_1.AdminService.deleteAdminById(id);
+    (0, sendResponse_1.default)(res, {
+        statusCode: 200,
+        success: true,
+        message: 'Admin deleted successfully',
         data: result,
     });
 }));
 exports.AdminController = {
     getAllAdmins,
+    getAdminById,
+    updateAdminById,
+    deleteAdminById,
 };

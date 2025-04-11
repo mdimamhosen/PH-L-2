@@ -24,6 +24,7 @@ exports.AdminService = void 0;
 const admin_constant_1 = require("./admin.constant");
 const PaginationBuilder_1 = require("../../utils/PaginationBuilder");
 const utils_1 = require("../../utils");
+const AppError_1 = require("../../utils/AppError");
 const getAllAdmins = (params, paginationOptions) => __awaiter(void 0, void 0, void 0, function* () {
     const { limit, page } = (0, PaginationBuilder_1.pagination)(paginationOptions);
     const { searchTerm } = params, filterData = __rest(params, ["searchTerm"]);
@@ -45,6 +46,9 @@ const getAllAdmins = (params, paginationOptions) => __awaiter(void 0, void 0, vo
             })),
         });
     }
+    conditions.push({
+        isDeleted: false,
+    });
     const whereCondition = {
         AND: conditions.length > 0 ? conditions : undefined,
     };
@@ -63,8 +67,88 @@ const getAllAdmins = (params, paginationOptions) => __awaiter(void 0, void 0, vo
             user: true,
         },
     });
-    return admins;
+    return {
+        meta: {
+            page,
+            limit,
+            total: admins.length,
+            totalPages: Math.ceil(admins.length / limit),
+        },
+        data: admins,
+    };
+});
+const getAdminById = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const admin = yield utils_1.prisma.admin.findUnique({
+        where: {
+            id,
+            isDeleted: false,
+        },
+        include: {
+            user: true,
+        },
+    });
+    return admin;
+});
+const updateAdminById = (id, data) => __awaiter(void 0, void 0, void 0, function* () {
+    const isExist = yield utils_1.prisma.admin.findUniqueOrThrow({
+        where: {
+            id,
+            isDeleted: false,
+        },
+    });
+    if (!isExist) {
+        new AppError_1.AppError('Admin not found', 404);
+    }
+    const admin = yield utils_1.prisma.admin.update({
+        where: {
+            id,
+        },
+        data,
+    });
+    return admin;
+});
+const deleteAdminById = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const isExist = yield utils_1.prisma.admin.findUniqueOrThrow({
+        where: {
+            id,
+        },
+    });
+    if (!isExist) {
+        new AppError_1.AppError('Admin not found', 404);
+    }
+    // !> This is a soft delete, we need to update the isDeleted field to true
+    const admin = yield utils_1.prisma.admin.update({
+        where: {
+            id,
+        },
+        data: {
+            isDeleted: true,
+        },
+    });
+    return admin;
+    // !> But this is not a soft delete, this is a hard delete
+    // !> So we need to delete the user as well, because the user is also deleted from the database
+    // const admin = await prisma.$transaction(async tx => {
+    //   const deletedAdmin = await tx.admin.delete({
+    //     where: {
+    //       id,
+    //     },
+    //     include: {
+    //       user: true,
+    //     },
+    //   });
+    //   await tx.user.delete({
+    //     where: {
+    //       email: deletedAdmin.email,
+    //     },
+    //   });
+    //   return deletedAdmin;
+    // });
+    // return admin;
 });
 exports.AdminService = {
     getAllAdmins,
+    getAdminById,
+    updateAdminById,
+    deleteAdminById,
 };
