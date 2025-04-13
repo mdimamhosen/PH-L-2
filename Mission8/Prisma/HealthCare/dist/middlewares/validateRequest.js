@@ -8,15 +8,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-const catchAsyncResponse = (fn) => {
-    return (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-        try {
-            yield fn(req, res, next);
-        }
-        catch (error) {
-            next(error);
-        }
-    });
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-exports.default = catchAsyncResponse;
+Object.defineProperty(exports, "__esModule", { value: true });
+const catchAsyncResponse_1 = __importDefault(require("../utils/catchAsyncResponse"));
+const ValidateUserRequest = (schema) => {
+    return (0, catchAsyncResponse_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+        yield schema.parseAsync({
+            body: req.body,
+            cookies: req.cookies,
+        });
+        next();
+    }));
+};
+exports.default = ValidateUserRequest;
