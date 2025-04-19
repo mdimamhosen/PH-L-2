@@ -2,6 +2,7 @@ import config from '../../config';
 import catchAsyncResponse from '../../utils/catchAsyncResponse';
 import sendResponse from '../../utils/sendResponse';
 import { AuthService } from './auth.service';
+import httpStatus from 'http-status';
 
 const loginUser = catchAsyncResponse(async (req, res) => {
   const { email, password } = req.body;
@@ -76,7 +77,33 @@ const changePassword = catchAsyncResponse(async (req, res) => {
   });
 });
 
+const forgotPassword = catchAsyncResponse(async (req, res) => {
+  await AuthService.forgetPassword(req.body);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Check your email!',
+    data: null,
+  });
+});
+
+const resetPassword = catchAsyncResponse(async (req, res) => {
+  const { token, newPassword, email } = req.body;
+  const result = await AuthService.resetPassword(token, email, newPassword);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Password reset successfully!',
+    data: result,
+  });
+});
+
 export const AuthController = {
   loginUser,
   refreshToken,
+  changePassword,
+  resetPassword,
+  forgotPassword,
 };
