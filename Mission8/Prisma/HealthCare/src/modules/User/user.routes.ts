@@ -2,6 +2,7 @@ import express from 'express';
 import { UserController } from './user.controller';
 import auth from '../../middlewares/auth';
 import { UserRole } from '@prisma/client';
+import { upload } from '../../utils/fileUpload';
 
 const router = express.Router();
 
@@ -11,7 +12,8 @@ router.get('/', (req, res) => {
 
 router.post(
   '/create-admin',
-  auth(UserRole.SUPER_ADMIN),
+  upload.single('file'),
+  // auth(UserRole.SUPER_ADMIN),
   UserController.createAdmin,
 );
 
