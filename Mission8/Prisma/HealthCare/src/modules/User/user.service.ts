@@ -1,8 +1,11 @@
-import { PrismaClient, UserRole } from '@prisma/client';
+import { Doctor, Patient, PrismaClient, UserRole } from '@prisma/client';
 import bcrypt from 'bcrypt';
-
+import { Admin, Prisma } from '@prisma/client';
 const prisma = new PrismaClient();
 
+import { Request } from 'express';
+import { IFile } from '../../interface/file';
+import { pagination } from '../../utils';
 const createAdmin = async (data: any) => {
   const { password, body } = data;
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -40,6 +43,142 @@ const createAdmin = async (data: any) => {
   return result;
 };
 
+const createDoctor = async (req: Request): Promise<Doctor> => {
+  // const file = req.file as IFile;
+
+  // if (file) {
+  //     const uploadToCloudinary = await fileUploader.uploadToCloudinary(file);
+  //     req.body.doctor.profilePhoto = uploadToCloudinary?.secure_url
+  // }
+
+  const hashedPassword: string = await bcrypt.hash(req.body.password, 12);
+
+  const userData = {
+    email: req.body.doctor.email,
+    password: hashedPassword,
+    role: UserRole.DOCTOR,
+  };
+
+  const result = await prisma.$transaction(async transactionClient => {
+    await transactionClient.user.create({
+      data: userData,
+    });
+
+    const createdDoctorData = await transactionClient.doctor.create({
+      data: req.body.doctor,
+    });
+
+    return createdDoctorData;
+  });
+
+  return result;
+};
+
+const createPatient = async (req: Request): Promise<Patient> => {
+  // const file = req.file as IFile;
+
+  // if (file) {
+  //     const uploadedProfileImage = await fileUploader.uploadToCloudinary(file);
+  //     req.body.patient.profilePhoto = uploadedProfileImage?.secure_url;
+  // }
+
+  const hashedPassword: string = await bcrypt.hash(req.body.password, 12);
+
+  const userData = {
+    email: req.body.patient.email,
+    password: hashedPassword,
+    role: UserRole.PATIENT,
+  };
+
+  const result = await prisma.$transaction(async transactionClient => {
+    await transactionClient.user.create({
+      data: userData,
+    });
+
+    const createdPatientData = await transactionClient.patient.create({
+      data: req.body.patient,
+    });
+
+    return createdPatientData;
+  });
+
+  return result;
+};
+
+const getAllFromDB = async (params: any, options: Record<string, unknown>) => {
+  const { limit, page, skip } = pagination(options);
+
+  const { searchTerm, ...filterData } = params;
+
+  const andCondions: Prisma.UserWhereInput[] = [];
+
+  //console.log(filterData);
+  if (params.searchTerm) {
+    andCondions.push({
+      OR: ['email'].map(field => ({
+        [field]: {
+          contains: params.searchTerm,
+          mode: 'insensitive',
+        },
+      })),
+    });
+  }
+
+  if (Object.keys(filterData).length > 0) {
+    andCondions.push({
+      AND: Object.keys(filterData).map(key => ({
+        [key]: {
+          equals: (filterData as any)[key],
+        },
+      })),
+    });
+  }
+
+  const whereConditons: Prisma.UserWhereInput =
+    andCondions.length > 0 ? { AND: andCondions } : {};
+
+  const result = await prisma.user.findMany({
+    where: whereConditons,
+    skip,
+    take: limit,
+    orderBy:
+      options.sortBy && options.sortOrder
+        ? {
+            [String(options.sortBy)]: options.sortOrder,
+          }
+        : {
+            createdAt: 'desc',
+          },
+    select: {
+      id: true,
+      email: true,
+      role: true,
+      needPasswordChange: true,
+      status: true,
+      createdAt: true,
+      updatedAt: true,
+      admin: true,
+      Patient: true,
+      Doctor: true,
+    },
+  });
+
+  const total = await prisma.user.count({
+    where: whereConditons,
+  });
+
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+    },
+    data: result,
+  };
+};
+
 export const UserService = {
   createAdmin,
+  createDoctor,
+  createPatient,
 };
