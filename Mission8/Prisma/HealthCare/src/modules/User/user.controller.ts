@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { UserService } from './user.service';
 import catchAsyncResponse from '../../utils/catchAsyncResponse';
 import sendResponse from '../../utils/sendResponse';
+import { IAuthUser } from '../../interface/common';
 
 const createAdmin = catchAsyncResponse(async (req: Request, res: Response) => {
   const result = await UserService.createAdmin(req.body);
@@ -36,8 +37,35 @@ const createPatient = catchAsyncResponse(
   },
 );
 
+const getMyProfile = catchAsyncResponse(async (req: Request, res: Response) => {
+  const result = await UserService.getMyProfile(req.user);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'User profile retrieved successfully',
+    data: result,
+  });
+});
+
+const updateMyProfile = catchAsyncResponse(
+  async (req: Request, res: Response) => {
+    const result = await UserService.updateMyProfile(
+      req.user as IAuthUser,
+      req.body,
+    );
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: 'User profile updated successfully',
+      data: result,
+    });
+  },
+);
+
 export const UserController = {
   createAdmin,
   createDoctor,
   createPatient,
+  getMyProfile,
+  updateMyProfile,
 };
