@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ts-node-dev --respawn --transpile-only src/logging.ts",
-    "build": "tsc",
+    "dev": "node init && ts-node-dev --respawn --transpile-only src/logging.ts",
+    "build": "node init && tsc",
     "prisma": "prisma",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "npx prisma migrate dev",

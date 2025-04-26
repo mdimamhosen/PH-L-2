@@ -11,7 +11,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "cd client && npm run dev",
     "server": "cd server && npm run dev",
-    "dev": "concurrently --prefix \"[{name}] 🚀\" -n \"Client,Server\" -c \"cyan.bold,green.bold\" \"npm run client\" \"npm run server\""
+    "dev": "node init && concurrently --prefix \"[{name}] \ud83d\ude80\" -n \"Client,Server\" -c \"cyan.bold,green.bold\" \"npm run client\" \"npm run server\""
   },
   "keywords": [],
   "author": "",
